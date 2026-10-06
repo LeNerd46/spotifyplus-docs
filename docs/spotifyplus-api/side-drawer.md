@@ -2,7 +2,7 @@
 sidebar_label: 'SideDrawer'
 ---
 
-import Badge from '@site/src/components/Badge';
+import Badge from '@site/src/components/badge';
 
 # SideDrawer
 
