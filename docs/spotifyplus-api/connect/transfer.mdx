@@ -1,0 +1,51 @@
+---
+sidebar_label: 'transfer()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Connect.transfer()
+
+Transfers playback to a Spotify Connect device.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Connect.transfer(device: string | <a href="/docs/types/api-types#connectdevice">ConnectDevice</a>): Promise&lt;void&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can prefer another available device over the current one.
+
+```ts
+// Prefer another available device over the current one.
+const devices = SpotifyPlus.Connect.getDevices();
+const target = devices.find(device => !device.isActive && !device.isDisabled);
+if (!target) {
+  SpotifyPlus.toast('No other device is available');
+  return;
+}
+
+await SpotifyPlus.Connect.transfer(target);
+SpotifyPlus.toast(`Transferred playback to ${target.name}`);
+```
+
+## Parameters
+
+`device`
+
+<Badge>string | ConnectDevice</Badge> <Badge variant="danger">Required</Badge>
+
+The device ID or a device returned by `getDevices()`.
+
+## Returns
+
+`Promise<void>`
+
+Resolves when the transfer request completes.
+
+## Remarks
+
+Pass a device ID or a device returned by getDevices().

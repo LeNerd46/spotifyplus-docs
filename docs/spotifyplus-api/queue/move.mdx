@@ -1,0 +1,67 @@
+---
+sidebar_label: 'move()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Queue.move()
+
+Moves an upcoming queue item.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Queue.move(snapshot: <a href="/docs/types/api-types#queuesnapshot">QueueSnapshot</a>, index: number, toIndex: number): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can make the second upcoming song play next.
+
+```ts
+// Make the second upcoming song play next.
+const snapshot = SpotifyPlus.Queue.get();
+if (snapshot.next.length < 2) return;
+
+try {
+  SpotifyPlus.Queue.move(snapshot, 1, 0);
+  SpotifyPlus.toast('Moved song to the front of the queue');
+} catch (error) {
+  // Get a fresh snapshot before trying another reorder.
+  console.warn('Queue changed', error);
+}
+```
+
+## Parameters
+
+`snapshot`
+
+<Badge href="/docs/types/api-types#queuesnapshot">QueueSnapshot</Badge> <Badge variant="danger">Required</Badge>
+
+A snapshot returned by `Queue.get()`, including its current revision.
+
+`index`
+
+<Badge>number</Badge> <Badge variant="danger">Required</Badge>
+
+The index in `snapshot.next` to move.
+
+`toIndex`
+
+<Badge>number</Badge> <Badge variant="danger">Required</Badge>
+
+The item’s final position in the upcoming queue.
+
+## Returns
+
+`void`
+
+Returns after the item is moved.
+
+## Remarks
+
+`toIndex` is the final index in snapshot.next. The call throws if the queue revision changed.
+
+
+This is a synchronous local call. It throws if the queue is not ready or Spotify rejects the operation. Edits acknowledge the local queue change; they do not wait for playback on another device.

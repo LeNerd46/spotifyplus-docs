@@ -1,0 +1,45 @@
+---
+sidebar_label: 'readText()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Platform.Clipboard.readText()
+
+Reads text from the Android clipboard.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Platform.Clipboard.readText(): string | null</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can look for a Spotify track URI copied by the user.
+
+```ts
+// Look for a Spotify track URI copied by the user.
+const text = SpotifyPlus.Platform.Clipboard.readText();
+if (!text?.startsWith('spotify:track:')) {
+  SpotifyPlus.toast('Copy a Spotify track URI first');
+  return;
+}
+
+const track = await SpotifyPlus.Internal.getTrack(text);
+if (track) SpotifyPlus.toast(`Copied track: ${track.title}`);
+```
+
+## Returns
+
+`string | null`
+
+Clipboard text, or null if unavailable.
+
+## Remarks
+
+Android can return null while Spotify is not focused.
+
+
+Calls Android's clipboard service synchronously. Use `try/catch` for service errors.

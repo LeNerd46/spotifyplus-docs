@@ -1,0 +1,52 @@
+---
+sidebar_label: 'search()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Search.search()
+
+Searches Spotify for matching items.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Search.search(query: string, options?: <a href="/docs/types/api-types#searchoptions">SearchOptions</a>): Promise&lt;<a href="/docs/types/api-types#searchresponse">SearchResponse</a>&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can find albums that match the user's search.
+
+```ts
+// Find albums that match the user's search.
+const results = await SpotifyPlus.Search.search('After Hours', { limit: 20 });
+
+// Search contains several item kinds, so select an album.
+const album = results.items.find(item => item.uri.startsWith('spotify:album:'));
+if (!album) return;
+
+// Opens the album page.
+SpotifyPlus.Navigation.open(album.uri);
+```
+
+## Parameters
+
+`query`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The words to search for.
+
+`options`
+
+<Badge href="/docs/types/api-types#searchoptions">SearchOptions</Badge> <Badge variant="neutral">Optional</Badge>
+
+Optional `limit` and `locale` for the search.
+
+## Returns
+
+`Promise<SearchResponse>`
+
+A query and matching items, each with a URI and display text.

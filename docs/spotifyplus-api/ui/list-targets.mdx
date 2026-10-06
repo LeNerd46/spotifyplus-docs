@@ -1,0 +1,39 @@
+---
+sidebar_label: 'listTargets()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# UI.listTargets()
+
+Lists UI targets and their capabilities.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.UI.listTargets(): Promise&lt;<a href="/docs/types/ui-targets#uitargetinfo">UITargetInfo</a>[]&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can find targets that can be replaced on this Spotify build.
+
+```ts
+import { SpotifyPlus } from 'spotifyplus';
+
+// Find targets that can be replaced on this Spotify build.
+const targets = await SpotifyPlus.UI.listTargets();
+const replaceable = targets.filter(target =>
+  target.available && target.operations.includes('replace')
+);
+
+for (const target of replaceable) console.log(target.name);
+SpotifyPlus.toast(`${replaceable.length} replacement targets available`);
+```
+
+## Returns
+
+`Promise<UITargetInfo[]>`
+
+All known targets with availability and supported operations.

@@ -1,0 +1,38 @@
+---
+sidebar_label: 'error()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# error()
+
+Writes an error tagged with this extension. Literally the same as `console.error()`.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.error(...args: unknown[]): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can log an unexpected playback failure with context.
+
+```ts
+// Log an unexpected playback failure with context.
+try {
+  SpotifyPlus.Player.play();
+} catch (error) {
+  SpotifyPlus.error('Could not resume playback', error);
+  SpotifyPlus.toast('Playback could not be resumed');
+}
+```
+
+## Parameters
+
+`args`
+
+<Badge>unknown[]</Badge> <Badge variant="danger">Required</Badge>
+
+The values to include in the log entry.

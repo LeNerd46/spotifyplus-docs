@@ -1,0 +1,58 @@
+---
+sidebar_label: 'registerSetting()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Settings.registerSetting()
+
+Registers one settings section.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Settings.registerSetting(setting: <a href="/docs/types/extension-settings#extensionsettingsection">ExtensionSettingSection</a>): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can build one settings section for playback behavior.
+
+```ts
+// Build one settings section for playback behavior.
+const section = {
+  title: 'Playback',
+  description: 'Choose how this extension responds to songs.',
+  items: [
+    { 
+        id: 'showToast', 
+        type: 'toggle', 
+        label: 'Show track toast', 
+        value: true 
+    },
+    { 
+        id: 'delay', 
+        type: 'slider', 
+        label: 'Toast delay', 
+        value: 2, 
+        min: 0, 
+        max: 10 
+    }
+  ],
+};
+
+SpotifyPlus.Settings.registerSetting(section);
+```
+
+## Parameters
+
+`setting`
+
+<Badge href="/docs/types/extension-settings#extensionsettingsection">ExtensionSettingSection</Badge> <Badge variant="danger">Required</Badge>
+
+A section containing settings items.
+
+## Remarks
+
+A section contains an items array of setting definitions.

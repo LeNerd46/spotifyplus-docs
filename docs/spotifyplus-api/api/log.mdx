@@ -1,0 +1,37 @@
+---
+sidebar_label: 'log()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# log()
+
+Writes a log message tagged with this extension. Literally the same as `console.log()`.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.log(...args: unknown[]): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can record the current track during extension startup.
+
+```ts
+// Record the current track during extension startup.
+SpotifyPlus.log('Starting extension', SpotifyPlus.scriptId);
+
+const state = SpotifyPlus.Player.getState();
+SpotifyPlus.log('Current track URI:', state.trackUri);
+SpotifyPlus.log('Playback position:', state.positionMs);
+```
+
+## Parameters
+
+`args`
+
+<Badge>unknown[]</Badge> <Badge variant="danger">Required</Badge>
+
+The values to include in the log entry.

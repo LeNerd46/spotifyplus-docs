@@ -1,0 +1,49 @@
+---
+sidebar_label: 'read()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Platform.Storage.Cache.read()
+
+Reads a temporary cache file.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Platform.Storage.Cache.read&lt;T = any&gt;(path: string): T | string | Uint8Array | null</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can use a recent cached search if Android has kept it.
+
+```ts
+// Use a recent cached search if Android has kept it.
+type CachedSearch = { query: string; items: Array<{ uri: string; text: string }> };
+const cached = SpotifyPlus.Platform.Storage.Cache.read<CachedSearch>('search/after-hours.json');
+
+if (cached && typeof cached !== 'string' && !(cached instanceof Uint8Array)) {
+  console.log(`Cached results for ${cached.query}:`, cached.items.length);
+} else {
+  console.log('Cache was cleared. Please run Search.search() again');
+}
+```
+
+## Parameters
+
+`path`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+A path relative to this extension’s storage area.
+
+## Returns
+
+`T | string | Uint8Array | null`
+
+The stored value, or null if missing. Although Android will almost never clear the cache itself, so not very likely unless if the user cleared it themself.
+
+
+Reads local extension storage synchronously. Returns the decoded value directly, or `null` when no value is available.

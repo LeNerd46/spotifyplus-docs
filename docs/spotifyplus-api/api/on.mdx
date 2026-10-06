@@ -1,0 +1,49 @@
+---
+sidebar_label: 'on()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# on()
+
+Registers a host event handler.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.on(eventName: string, handler: <a href="/docs/types/event-handlers">EventHandler</a>): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can keep a scripted surface open when Android Back is pressed.
+
+```ts
+// Keep a scripted surface open when Android Back is pressed.
+const handleBack = (event: { preventDefault(): void }) => {
+  event.preventDefault();
+  SpotifyPlus.Navigation.back();
+};
+
+SpotifyPlus.on('android.backPressed', handleBack);
+// Remove the handler with SpotifyPlus.off() when finished.
+```
+
+## Parameters
+
+`eventName`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The event name to listen for or emit.
+
+`handler`
+
+<Badge href="/docs/types/event-handlers">EventHandler</Badge> <Badge variant="danger">Required</Badge>
+
+The callback to invoke for this event.
+
+## Remarks
+
+For Spotify state events and local custom events, use SpotifyPlus.Events.on(). The android.backPressed event can prevent the default closing behavior.

@@ -1,0 +1,143 @@
+---
+sidebar_label: 'SpotifyTrack'
+---
+
+import Badge from '@site/src/components/Badge';
+
+# SpotifyTrack
+
+Defines a track inside of Spotify
+
+## Syntax
+
+```ts
+class SpotifyTrack {
+    readonly title: string;
+    readonly trackNumber: number;
+    readonly durationMs: number;
+    readonly explicit: boolean;
+    readonly uri: string;
+    readonly id: string;
+    readonly artist: string;
+    readonly artists: string[];
+    readonly album: SpotifyAlbumData;
+    readonly displayName: string;
+
+    static from(data: SpotifyTrackData): SpotifyTrack;
+    toJSON(): SpotifyTrackData;
+}
+```
+
+## Methods
+
+`toJSON()`
+
+Converts the Spotify track to a JSON object
+
+`SpotifyTrack.from(data)`
+
+Creates a new SpotifyTrack from given data. 
+
+```ts
+import { SpotifyTrack } from 'spotifyplus';
+
+const track = SpotifyPlus.Player.getCurrentTrack();
+const copy = SpotifyTrack.from(track.toJSON());
+console.log(copy.displayName);
+```
+
+`toJSON()` returns a plain `SpotifyTrackData` object with the track fields.
+
+## Fields
+
+`title`
+
+<Badge>string</Badge>
+
+The name of the song
+
+`trackNumber`
+
+<Badge>number</Badge>
+
+The position of the track on its album
+
+`durationMs`
+
+<Badge>number</Badge>
+
+The length of the song in milliseconds
+
+`explicit`
+
+<Badge>boolean</Badge>
+
+Whether the song is explicit
+
+`uri`
+
+<Badge>string</Badge>
+
+The Spotify URI for this song
+
+`artist`
+
+<Badge>string</Badge>
+
+The name of the main artist of the song
+
+`artists`
+
+<Badge>string[]</Badge>
+
+A list of all the artists that worked on this song
+
+`album`
+
+<Badge href='/docs/types/spotify-album'>SpotifyAlbumData</Badge>
+
+The album this track belongs to
+
+`displayName`
+
+<Badge>string</Badge>
+
+A string containing the name of the song with the main artist (i.e. Lover - Taylor Swift)
+
+## Examples
+
+The following example gets the currently playing song and logs the name to the console
+
+```ts
+const currentTrack = SpotifyPlus.Player.getCurrentTrack();
+console.log(currentTrack.displayName);
+```
+
+The following example will search for an album. Then it will log the name and duration of the first song on that album.
+
+```ts
+// Search for the album
+const search = await SpotifyPlus.Search.search('After Hours');
+
+// Get the first album from the search
+const albumUri = search.items.find(item => item.uri.startsWith('spotify:album:'));
+if(!albumUri) return;
+
+// Get information about the album
+const album = await SpotifyPlus.Internal.getAlbum(albumUri.uri);
+if(!album) return;
+
+// Get the Spotify URI of the first track
+const firstTrackUri = album.discs[0]?.tracks[0];
+if (!firstTrackUri) return;
+
+// Get information about the first track
+const firstTrack = await SpotifyPlus.Internal.getTrack(firstTrackUri);
+if(!firstTrack) return;
+
+console.log(`${firstTrack.title} - ${firstTrack.durationMs}ms`)
+```
+
+## Remarks
+
+`Player.getCurrentTrack()` does not include every field on the object. `artists` has only the main artist and `explicit` is always `false`. Use `Internal.getTrack(uri)` when those fields matter.

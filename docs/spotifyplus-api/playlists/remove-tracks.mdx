@@ -1,0 +1,61 @@
+---
+sidebar_label: 'removeTracks()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Playlists.removeTracks()
+
+Removes songs from a playlist.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Playlists.removeTracks(playlist: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>, rowIds: string[]): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can read a playlist so we can target one exact row.
+
+```ts
+// Read a playlist so we can target one exact row.
+const saved = await SpotifyPlus.Library.list({ type: 'playlist', limit: 1 });
+const playlistUri = saved.items[0]?.uri;
+if (!playlistUri) return;
+
+const page = await SpotifyPlus.Playlists.get(playlistUri, { limit: 20 });
+const row = page.items[0];
+if (!row) return;
+
+// A row ID removes this occurrence, even if the track appears elsewhere.
+SpotifyPlus.Playlists.removeTracks(playlistUri, [row.rowId]);
+```
+
+## Parameters
+
+`playlist`
+
+<Badge href="/docs/types/spotify-uri-input">SpotifyUriInput</Badge> <Badge variant="danger">Required</Badge>
+
+The playlist to read or change.
+
+`rowIds`
+
+<Badge>string[]</Badge> <Badge variant="danger">Required</Badge>
+
+The IDs of individual playlist rows returned by `Playlists.get()`.
+
+## Returns
+
+`void`
+
+Returns after the rows are removed.
+
+## Remarks
+
+Use rowId from get().items. A track URI can appear more than once, so its URI does not identify a row.
+
+
+This is a synchronous local modification. It throws if Spotify rejects the operation. The result acknowledges the local playlist change; Spotify synchronizes the account separately. Playlist loading with `Playlists.get()` remains asynchronous.

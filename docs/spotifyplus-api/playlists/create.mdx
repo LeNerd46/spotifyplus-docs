@@ -1,0 +1,49 @@
+---
+sidebar_label: 'create()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Playlists.create()
+
+Creates a playlist in the current user’s library.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Playlists.create(name: string): &#123; uri: string; name: string &#125;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can make a new playlist, then put a track into it.
+
+```ts
+// Make a new playlist, then put a track into it.
+const playlist = SpotifyPlus.Playlists.create('Songs to revisit');
+const track = SpotifyPlus.Player.getCurrentTrack();
+
+if (track.uri) {
+  SpotifyPlus.Playlists.addTracks(playlist.uri, [track.uri]);
+}
+
+SpotifyPlus.toast(`Created ${playlist.name}`);
+```
+
+## Parameters
+
+`name`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The name to use.
+
+## Returns
+
+`{ uri: string; name: string }`
+
+The new playlist URI and name.
+
+
+This is a synchronous local modification. It throws if Spotify rejects the operation. The result acknowledges the local playlist change; Spotify synchronizes the account separately. Playlist loading with `Playlists.get()` remains asynchronous.

@@ -1,0 +1,67 @@
+---
+sidebar_label: 'replace()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# UI.replace()
+
+Replaces a supported Spotify UI target with a React component.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.UI.replace(target: <a href="/docs/types/ui-targets#uitarget">UITarget</a>, component: React.ComponentType&lt;<a href="/docs/types/ui-targets#uicomponentprops">UIComponentProps</a>&gt;): <a href="/docs/types/ui-targets#uiregistration">UIRegistration</a></span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can replace a supported header with a component that keeps the native view.
+
+```tsx
+import { SpotifyPlus, type UIComponentProps } from 'spotifyplus';
+import { Text } from 'spotifyplus/react';
+
+// Replace a supported header with a component that keeps the native view.
+function Header({ context, Original }: UIComponentProps) {
+  return <><Original /><Text>{context.title}</Text></>;
+}
+
+async function install() {
+  const info = await SpotifyPlus.UI.inspect('contextMenu.header');
+  if (!info.available || !info.operations.includes('replace')) return;
+  
+  const registration = SpotifyPlus.UI.replace('contextMenu.header', Header);
+  // Call registration.dispose() when this UI is no longer needed.
+}
+void install().catch(console.error);
+```
+
+## Parameters
+
+`target`
+
+<Badge href="/docs/types/ui-targets#uitarget">UITarget</Badge> <Badge variant="danger">Required</Badge>
+
+The named Spotify UI target or a target selector.
+
+`component`
+
+<Badge>React.ComponentType&lt;UIComponentProps&gt;</Badge> <Badge variant="danger">Required</Badge>
+
+The React component to mount at the target.
+
+## Returns
+
+`UIRegistration`
+
+A registration that can be disposed.
+
+## Remarks
+
+Check inspect() for availability and supported operations. The component receives context and Original props.
+
+Only the first replacement in extension priority order renders. Returning `null` intentionally hides the region. `Original` must mount at most once in its own replacement; dispose the handle to restore ownership. Removing/readding native content can reset its composition state.
+
+See [UI targets](./index.md) for current support, lifecycle, native content rules, and extension ordering.

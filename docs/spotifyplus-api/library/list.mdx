@@ -1,0 +1,55 @@
+---
+sidebar_label: 'list()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Library.list()
+
+Lists items in the current user’s library.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Library.list(options?: <a href="/docs/types/api-types#pageoptions">PageOptions</a> &amp; &#123; type?: 'all' | 'playlist' | 'album' | 'artist' &#125;): Promise&lt;<a href="/docs/types/api-types#page">Page</a>&lt;<a href="/docs/types/api-types#libraryitem">LibraryItem</a>&gt;&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can read the first page of saved albums.
+
+```ts
+// Read the first page of saved albums.
+const page = await SpotifyPlus.Library.list({ type: 'album', offset: 0, limit: 20 });
+console.log(`You have ${page.total} saved albums`);
+
+for (const album of page.items) {
+  console.log(album.name, album.uri);
+}
+
+// Request the next page when more results remain.
+if (page.offset + page.items.length < page.total) {
+  const next = await SpotifyPlus.Library.list({
+    type: 'album', offset: page.offset + page.items.length, limit: 20,
+  });
+
+  console.log('Next page:', next.items.length);
+}
+```
+
+## Parameters
+
+`options`
+
+<Badge>PageOptions &amp; &#123; type?: 'all' | 'playlist' | 'album' | 'artist' &#125;</Badge> <Badge variant="neutral">Optional</Badge>
+
+Optional `offset`, `limit`, and item `type` filter.
+
+## Returns
+
+`Promise<Page<LibraryItem>>`
+
+A page of library items and a total count.
+
+This method remains asynchronous because it waits for Spotify to supply a loaded, decorated library page. Membership checks and library edits are synchronous.

@@ -1,0 +1,47 @@
+---
+sidebar_label: 'getPlaylist()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Internal.getPlaylist()
+
+Gets playlist metadata independently of paginated playlist items.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Internal.getPlaylist(uri: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>): Promise&lt;<a href="/docs/types/metadata#metadataplaylist">MetadataPlaylist</a> | null&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can read playlist metadata without fetching a paginated track page.
+
+```ts
+// Read playlist metadata without fetching a paginated track page.
+const saved = await SpotifyPlus.Library.list({ type: 'playlist', limit: 1 });
+const uri = saved.items[0]?.uri;
+if (!uri) return;
+
+const playlist = await SpotifyPlus.Internal.getPlaylist(uri);
+if (!playlist) return;
+
+console.log(`${playlist.name}: ${playlist.length} tracks`);
+console.log('Can edit items:', playlist.canEditItems);
+```
+
+## Parameters
+
+`uri`
+
+<Badge href="/docs/types/spotify-uri-input">SpotifyUriInput</Badge> <Badge variant="danger">Required</Badge>
+
+The URI of the Spotify item.
+
+## Returns
+
+`Promise<MetadataPlaylist | null>`
+
+Playlist metadata, or null if unavailable.

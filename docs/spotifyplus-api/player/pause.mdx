@@ -1,0 +1,38 @@
+---
+sidebar_label: 'pause()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Player.pause()
+
+Pauses the current track.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Player.pause(): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can pause only if a track is currently playing.
+
+```ts
+// Pause only if a track is currently playing.
+const state = SpotifyPlus.Player.getState();
+if (!state.isPlaying) return;
+
+SpotifyPlus.Player.pause();
+SpotifyPlus.toast('Playback paused');
+```
+
+## Returns
+
+`void`
+
+Returns after the pause request completes.
+
+
+This is a synchronous local call. It throws if the player is not ready or Spotify rejects the command. Use `try/catch` for errors. Playback state and events can update after the call returns.

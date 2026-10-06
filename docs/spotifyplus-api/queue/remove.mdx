@@ -1,0 +1,62 @@
+---
+sidebar_label: 'remove()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Queue.remove()
+
+Removes one upcoming queue occurrence.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Queue.remove(snapshot: <a href="/docs/types/api-types#queuesnapshot">QueueSnapshot</a>, index: number): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can remove the next queued occurrence without affecting the current song.
+
+```ts
+// Remove the next queued occurrence without affecting the current song.
+const snapshot = SpotifyPlus.Queue.get();
+const next = snapshot.next[0];
+if (!next) return;
+
+try {
+  SpotifyPlus.Queue.remove(snapshot, 0);
+  SpotifyPlus.toast('Removed from queue');
+} catch (error) {
+  // The queue may have changed since this snapshot was read.
+  console.warn('Queue changed. Please fetch it again', error);
+}
+```
+
+## Parameters
+
+`snapshot`
+
+<Badge href="/docs/types/api-types#queuesnapshot">QueueSnapshot</Badge> <Badge variant="danger">Required</Badge>
+
+A snapshot returned by `Queue.get()`, including its current revision.
+
+`index`
+
+<Badge>number</Badge> <Badge variant="danger">Required</Badge>
+
+The index in `snapshot.next` to remove.
+
+## Returns
+
+`void`
+
+Returns after the item is removed.
+
+## Remarks
+
+The call throws if the queue revision changed. Fetch a new snapshot and retry.
+
+
+This is a synchronous local call. It throws if the queue is not ready or Spotify rejects the operation. Edits acknowledge the local queue change; they do not wait for playback on another device.

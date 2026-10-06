@@ -1,0 +1,42 @@
+---
+sidebar_label: 'openUri()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# openUri()
+
+Opens a URI using automatic navigation.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.openUri(uri: string): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can open an album with the legacy navigation helper.
+
+```ts
+// Open an album with the legacy navigation helper.
+const results = await SpotifyPlus.Search.search('After Hours');
+const album = results.items.find(item => item.uri.startsWith('spotify:album:'));
+if (!album) return;
+
+SpotifyPlus.openUri(album.uri);
+// New code should use Navigation.open() for a success result.
+```
+
+## Parameters
+
+`uri`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The URI to open using automatic navigation.
+
+## Remarks
+
+Deprecated. Use SpotifyPlus.Navigation.open(uri) for a result and target options.

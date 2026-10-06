@@ -1,0 +1,48 @@
+---
+sidebar_label: 'read()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Platform.Storage.read()
+
+Reads a file from storage. Your can only read files from your extension's storage.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Platform.Storage.read&lt;T = any&gt;(path: string): T | string | Uint8Array | null</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can restore the last track recorded by this extension.
+
+```ts
+// Restore the last track recorded by this extension.
+type LastPlayed = { uri: string; title: string; savedAt: number };
+const value = SpotifyPlus.Platform.Storage.read<LastPlayed>('history/last-played.json');
+
+if (value && typeof value !== 'string' && !(value instanceof Uint8Array)) {
+  console.log(`Last played: ${value.title}`);
+  SpotifyPlus.Navigation.openSpotify(value.uri);
+}
+```
+
+## Parameters
+
+`path`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+A path relative to this extension’s storage area.
+
+## Returns
+
+`T | string | Uint8Array | null`
+
+The stored JSON value, string, bytes, or null if missing.
+
+
+Reads local extension storage synchronously. Returns the decoded value directly, or `null` when no value is available.

@@ -1,0 +1,47 @@
+---
+sidebar_label: 'setRepeat()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Player.setRepeat()
+
+Sets the repeat mode.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Player.setRepeat(mode: <a href='/docs/types/repeat-mode'>RepeatMode</a>): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example changes repeat mode only when the current track is not already repeating.
+
+```ts
+// Read the current mode before changing it.
+const state = SpotifyPlus.Player.getState();
+
+if (state.repeat !== 'repeat-one') {
+  SpotifyPlus.Player.setRepeat('repeat-one');
+  SpotifyPlus.toast('Repeating this song');
+}
+```
+
+## Parameters
+
+`mode`
+
+<Badge href="/docs/types/repeat-mode">RepeatMode</Badge> <Badge variant="danger">Required</Badge>
+
+The desired repeat mode: `off`, `repeat`, or `repeat-one`.
+
+## Returns
+
+`void`
+
+Returns after Spotify acknowledges the local command. Playback and state events may arrive later.
+
+
+This is a synchronous local call. It throws if the player is not ready or Spotify rejects the command. Use `try/catch` for errors. Playback state and events can update after the call returns.

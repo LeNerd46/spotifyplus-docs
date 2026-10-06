@@ -1,0 +1,37 @@
+---
+sidebar_label: 'getCurrent()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# User.getCurrent()
+
+Gets the signed-in Spotify user.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.User.getCurrent(): Promise&lt;<a href="/docs/types/api-types#spotifyuser">SpotifyUser</a>&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can greet the signed-in user by their display name.
+
+```ts
+// Greet the signed-in user by their display name.
+const user = await SpotifyPlus.User.getCurrent();
+const name = user.displayName || user.username;
+
+SpotifyPlus.toast(`Welcome, ${name}`);
+console.log('Profile URI:', user.uri);
+
+if (user.images.length) console.log('Avatar:', user.images[0].url);
+```
+
+## Returns
+
+`Promise<SpotifyUser>`
+
+The user’s username, display name, URI, and images.

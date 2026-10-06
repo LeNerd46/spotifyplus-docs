@@ -1,0 +1,49 @@
+---
+sidebar_label: 'fontFamily()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Assets.fontFamily()
+
+Creates a font family from bundled font faces.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Assets.fontFamily(faces: ReadonlyArray&lt;<a href="/docs/types/extension-assets#extensionfontface">ExtensionFontFace</a>&gt;): <a href="/docs/types/extension-assets#extensionfontfamily">ExtensionFontFamily</a></span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can combine regular and bold font files into one family.
+
+```ts
+// Combine regular and bold font files into one family.
+const family = SpotifyPlus.Assets.fontFamily([
+  { source: 'fonts/Brand-Regular.ttf', weight: 400 },
+  { source: 'fonts/Brand-Bold.ttf', weight: 700 },
+]);
+
+console.log('Available font faces:', family.faces.length);
+// Use the family in a component style that accepts custom fonts.
+```
+
+## Parameters
+
+`faces`
+
+<Badge>ReadonlyArray&lt;ExtensionFontFace&gt;</Badge> <Badge variant="danger">Required</Badge>
+
+One or more bundled font face definitions.
+
+## Returns
+
+`ExtensionFontFamily`
+
+A font family reference.
+
+## Remarks
+
+At least one face is required. Each face can specify weight and normal or italic style.

@@ -1,0 +1,59 @@
+---
+sidebar_label: 'get()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Playlists.get()
+
+Gets playlist details and a page of its tracks.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Playlists.get(playlist: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>, options?: <a href="/docs/types/api-types#pageoptions">PageOptions</a>): Promise&lt;<a href="/docs/types/api-types#playlistpage">PlaylistPage</a>&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can get the first playlist saved in the user's library.
+
+```ts
+// Get the first playlist saved in the user's library.
+const saved = await SpotifyPlus.Library.list({ type: 'playlist', limit: 1 });
+const playlistUri = saved.items[0]?.uri;
+if (!playlistUri) return;
+
+// Read its first page of tracks and its total track count.
+const playlist = await SpotifyPlus.Playlists.get(playlistUri, { offset: 0, limit: 25 });
+console.log(`${playlist.name} has ${playlist.total} tracks`);
+
+for (const item of playlist.items) {
+  console.log(item.name);
+}
+```
+
+## Parameters
+
+`playlist`
+
+<Badge href="/docs/types/spotify-uri-input">SpotifyUriInput</Badge> <Badge variant="danger">Required</Badge>
+
+The playlist to read or change.
+
+`options`
+
+<Badge href="/docs/types/api-types#pageoptions">PageOptions</Badge> <Badge variant="neutral">Optional</Badge>
+
+Optional `offset` and `limit` for playlist pagination.
+
+## Returns
+
+`Promise<PlaylistPage>`
+
+Playlist metadata, total count, and a page of items.
+
+## Remarks
+
+Use offset and limit to request more items. Each item has a rowId for editing a specific occurrence.

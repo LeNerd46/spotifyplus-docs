@@ -1,0 +1,39 @@
+---
+sidebar_label: 'getProgress()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Player.getProgress()
+
+Gets the current playback position.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Player.getProgress(): number</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can show a rounded elapsed time for the current track.
+
+```ts
+// Show a rounded elapsed time for the current track.
+const track = SpotifyPlus.Player.getCurrentTrack();
+const positionMs = SpotifyPlus.Player.getProgress();
+
+const elapsed = Math.floor(positionMs / 1000);
+const duration = Math.floor(track.durationMs / 1000);
+
+console.log(`${elapsed}s of ${duration}s: ${track.title}`);
+```
+
+## Returns
+
+`number`
+
+The current position in milliseconds.
+
+Reads local extension storage synchronously. Returns the decoded value directly, or `null` when no value is available.

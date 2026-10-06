@@ -1,0 +1,48 @@
+---
+sidebar_label: 'openExternal()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Navigation.openExternal()
+
+Opens a URL in the user’s browser.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Navigation.openExternal(url: string): boolean</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can send the user to a help page in their browser.
+
+```ts
+// Send the user to a help page in their browser.
+const helpUrl = 'https://www.github.com/LeNerd46/SpotifyPlus';
+const opened = SpotifyPlus.Navigation.openExternal(helpUrl);
+
+if (!opened) {
+  SpotifyPlus.toast('Could not open the browser');
+}
+```
+
+## Parameters
+
+`url`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The URL to open.
+
+## Returns
+
+`boolean`
+
+True if navigation was accepted.
+
+## Remarks
+
+Use an HTTP or HTTPS URL.

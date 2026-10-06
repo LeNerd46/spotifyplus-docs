@@ -1,0 +1,48 @@
+---
+sidebar_label: 'get()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Platform.Storage.get()
+
+Gets a preference you set for your extension. This is not reading a file. This is reading your extension's preferences. Useful for storing user settings.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Platform.Storage.get&lt;T = any&gt;(key: string): T | null</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can restore a preference, choosing a default the first time.
+
+```ts
+// Restore a preference, choosing a default the first time.
+const saved = SpotifyPlus.Platform.Storage.get<boolean>('showTrackToasts');
+const enabled = saved ?? true;
+
+if (enabled) {
+  const track = SpotifyPlus.Player.getCurrentTrack();
+  SpotifyPlus.toast(`Now playing: ${track.title}`);
+}
+```
+
+## Parameters
+
+`key`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The extension-scoped preference key.
+
+## Returns
+
+`T | null`
+
+The stored value, or null if missing.
+
+
+Reads local extension storage synchronously. Returns the decoded value directly, or `null` when no value is available.

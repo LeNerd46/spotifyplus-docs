@@ -1,0 +1,49 @@
+---
+sidebar_label: 'off()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Events.off()
+
+Removes a previously registered event listener.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Events.off(eventName: string, handler: <a href="/docs/types/event-handlers">ExtensionEventHandler</a>): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can subscribe while a feature is enabled, then remove the listener.
+
+```ts
+// Subscribe while a feature is enabled, then remove the listener.
+const onShuffleChanged = ({ enabled }: { enabled: boolean }) => {
+  console.log(enabled ? 'Shuffle on' : 'Shuffle off');
+};
+
+SpotifyPlus.Events.on('shuffleChanged', onShuffleChanged);
+// When the feature is turned off:
+SpotifyPlus.Events.off('shuffleChanged', onShuffleChanged);
+```
+
+## Parameters
+
+`eventName`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The event name to listen for or emit.
+
+`handler`
+
+<Badge href="/docs/types/event-handlers">ExtensionEventHandler</Badge> <Badge variant="danger">Required</Badge>
+
+The exact callback reference previously passed to `Events.on()` or `Events.once()`.
+
+## Remarks
+
+Pass the same function reference that was registered.

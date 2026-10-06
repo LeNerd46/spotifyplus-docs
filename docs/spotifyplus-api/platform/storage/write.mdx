@@ -1,0 +1,50 @@
+---
+sidebar_label: 'write()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Platform.Storage.write()
+
+Writes a file to storage.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Platform.Storage.write(path: string, value: string | object | Uint8Array | ArrayBuffer): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can persist a larger object in an extension-owned file.
+
+```ts
+// Persist a larger object in a file.
+const current = SpotifyPlus.Player.getCurrentTrack();
+const lastPlayed = {
+  uri: current.uri,
+  title: current.title,
+  savedAt: Date.now(),
+};
+
+SpotifyPlus.Platform.Storage.write('history/last-played.json', lastPlayed);
+```
+
+## Parameters
+
+`path`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+A path relative to this extension’s storage area.
+
+`value`
+
+<Badge>string | object | Uint8Array | ArrayBuffer</Badge> <Badge variant="danger">Required</Badge>
+
+The value to store.
+
+## Remarks
+
+Strings, JSON values, and binary data are supported. Paths are relative to this extension’s storage.

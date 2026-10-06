@@ -1,0 +1,52 @@
+---
+sidebar_label: 'openSpotify()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Navigation.openSpotify()
+
+Opens a Spotify URI or web link inside Spotify.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Navigation.openSpotify(uri: string): boolean</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can open the current track's page inside Spotify.
+
+```ts
+// Open the current track's page inside Spotify.
+const track = SpotifyPlus.Player.getCurrentTrack();
+if (!track.uri) return;
+
+const opened = SpotifyPlus.Navigation.openSpotify(track.uri);
+if (!opened) console.warn('Spotify did not open the track page');
+```
+
+## Parameters
+
+`uri`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The URI of the Spotify item.
+
+## Returns
+
+`boolean`
+
+True if navigation was accepted.
+
+## Open Now Playing
+
+```ts
+const opened = SpotifyPlus.Navigation.openSpotify('spotify:now-playing');
+if (!opened) console.warn('Now Playing navigation was not accepted');
+```
+
+On Spotify **9.1.82.2160**, `spotify:now-playing` and `spotify:now-playing-view` launch the full native Now Playing activity with shared-element transitions disabled. This works from a custom mini-player without a native transition source. A registered `nowPlaying.page` replacement applies in the launched activity. This launches the screen without starting playback.

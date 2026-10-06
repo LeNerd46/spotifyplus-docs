@@ -1,0 +1,54 @@
+---
+sidebar_label: 'emit()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Events.emit()
+
+Emits a custom event within this extension.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Events.emit&lt;TPayload = unknown&gt;(eventName: string, payload?: TPayload): Promise&lt;void&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can announce that this extension opened a panel.
+
+```ts
+// Announce that this extension opened a panel.
+SpotifyPlus.Events.on('panelOpened', ({ source }: { source: string }) => {
+  console.log('Panel opened from', source);
+});
+
+await SpotifyPlus.Events.emit('panelOpened', { source: 'side drawer' });
+// Custom events stay in this extension.
+```
+
+## Parameters
+
+`eventName`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The event name to listen for or emit.
+
+`payload`
+
+<Badge>TPayload</Badge> <Badge variant="neutral">Optional</Badge>
+
+Optional data to send with the event or request.
+
+## Returns
+
+`Promise<void>`
+
+Resolves after the event is emitted.
+
+## Remarks
+
+Custom events stay local to this extension; Spotify state events are broadcast to every extension.

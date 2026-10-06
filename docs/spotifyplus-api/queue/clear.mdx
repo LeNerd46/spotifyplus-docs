@@ -1,0 +1,54 @@
+---
+sidebar_label: 'clear()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Queue.clear()
+
+Clears upcoming tracks from the queue.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Queue.clear(snapshot: <a href="/docs/types/api-types#queuesnapshot">QueueSnapshot</a>): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can clear upcoming songs while leaving the current track alone.
+
+```ts
+// Clear upcoming songs while leaving the current track alone.
+const snapshot = SpotifyPlus.Queue.get();
+if (snapshot.next.length === 0) return;
+
+try {
+  SpotifyPlus.Queue.clear(snapshot);
+  SpotifyPlus.toast(`Cleared ${snapshot.next.length} upcoming songs`);
+} catch (error) {
+  console.warn('Queue changed. Please fetch a new snapshot', error);
+}
+```
+
+## Parameters
+
+`snapshot`
+
+<Badge href="/docs/types/api-types#queuesnapshot">QueueSnapshot</Badge> <Badge variant="danger">Required</Badge>
+
+A snapshot returned by `Queue.get()`, including its current revision.
+
+## Returns
+
+`void`
+
+Returns after the upcoming queue is cleared.
+
+## Remarks
+
+Keeps the current track and playback history. The call throws if the queue revision changed.
+
+
+This is a synchronous local call. It throws if the queue is not ready or Spotify rejects the operation. Edits acknowledge the local queue change; they do not wait for playback on another device.

@@ -1,0 +1,41 @@
+---
+sidebar_label: 'close()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Surfaces.close()
+
+Closes this extension’s currently displayed scripted surface.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Surfaces.close(): boolean</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can close a scripted view after the user completes an action.
+
+```ts
+// Close a scripted view after the user completes an action.
+const track = SpotifyPlus.Player.getCurrentTrack();
+if (track.uri) {
+  SpotifyPlus.Platform.Clipboard.writeText(track.uri);
+  SpotifyPlus.toast('Track URI copied');
+}
+
+const closed = SpotifyPlus.Surfaces.close();
+if (!closed) SpotifyPlus.log('No scripted view was open');
+```
+
+## Parameters
+
+None.
+## Returns
+
+`boolean`
+
+True if a surface was closed.

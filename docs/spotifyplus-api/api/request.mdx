@@ -1,0 +1,56 @@
+---
+sidebar_label: 'request()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# request()
+
+Sends a named request to the host bridge.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.request&lt;TPayload = unknown&gt;(name: string, payload?: unknown): Promise&lt;TPayload&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can ask a host handler to perform an extension-specific operation.
+
+```ts
+// Ask a host handler to perform an extension-specific operation.
+type Result = { accepted: boolean };
+
+try {
+  const result = await SpotifyPlus.request<Result>('extension.command', { enabled: true });
+  console.log('Request accepted:', result.accepted);
+} catch (error) {
+  console.error('Host request failed', error);
+}
+```
+
+## Parameters
+
+`name`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The name of a request handled by the host.
+
+`payload`
+
+<Badge>unknown</Badge> <Badge variant="neutral">Optional</Badge>
+
+Optional data to send with the event or request.
+
+## Returns
+
+`Promise<TPayload>`
+
+The host response for that request.
+
+## Remarks
+
+The request name must be handled by the host. Prefer the named APIs for built-in Spotify operations.

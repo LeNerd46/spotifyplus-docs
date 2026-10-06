@@ -1,0 +1,78 @@
+---
+sidebar_label: 'setShuffle()'
+---
+
+import Badge from '@site/src/components/Badge';
+
+# Player.setShuffle()
+
+Sets the player's shuffle state
+
+## Syntax
+
+```ts
+SpotifyPlus.Player.setShuffle(enabled: boolean): void
+```
+
+## Examples
+
+The following example will toggle the shuffle state when the user presses a button
+
+```tsx
+import { Text } from 'spotifyplus/react';
+
+import { useEffect, useState } from 'react';
+import { SpotifyPlus } from 'spotifyplus';
+import { View, Text, Pressable } from 'spotifyplus/react';
+
+const Screen = () => {
+    const [shuffle, setShuffle] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const load = () => {
+            const state = SpotifyPlus.Player.getState();
+            setShuffle(state.shuffle);
+            setLoading(false);
+        };
+
+        load();
+    }, []);
+
+    const toggleShuffle = () => {
+        const enabled = !shuffle;
+
+        SpotifyPlus.Player.setShuffle(enabled);
+        setShuffle(enabled);
+    };
+
+    if (loading) return <Text>Loading...</Text>;
+
+    return (
+        <View style={{ flex: 1 }}>
+            <Text>{shuffle ? 'Spotify is shuffling' : 'Spotify is not shuffling'}</Text>
+
+            <Pressable onPress={toggleShuffle}>Toggle Shuffle</Pressable>
+        </View>
+    );
+};
+
+export default Screen;
+```
+
+## Parameters
+
+`enabled`
+
+<Badge>boolean</Badge> <Badge variant="danger">Required</Badge>
+
+Whether shuffle should be on.
+
+## Returns
+
+`void`
+
+Returns after Spotify acknowledges the local command. Playback and state events may arrive later.
+
+
+This is a synchronous local call. It throws if the player is not ready or Spotify rejects the command. Use `try/catch` for errors. Playback state and events can update after the call returns.

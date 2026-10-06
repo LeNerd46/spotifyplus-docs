@@ -1,0 +1,49 @@
+---
+sidebar_label: 'readBytes()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Assets.readBytes()
+
+Reads a bundled asset as bytes.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Assets.readBytes(relativePath: string): Uint8Array</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can inspect a binary file bundled with the extension.
+
+```ts
+// Inspect a binary file bundled with the extension.
+const bytes = SpotifyPlus.Assets.readBytes('sounds/alert.mp3');
+if (bytes.length === 0) {
+  console.warn('The alert sound is empty');
+  return;
+}
+
+console.log(`Loaded ${bytes.length} audio bytes`);
+```
+
+## Parameters
+
+`relativePath`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+A path to a file declared in `manifest.assets`.
+
+## Returns
+
+`Uint8Array`
+
+The file contents as a byte array.
+
+## Remarks
+
+The file must be declared in manifest.assets.

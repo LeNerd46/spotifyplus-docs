@@ -1,0 +1,47 @@
+---
+sidebar_label: 'readText()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Assets.readText()
+
+Reads a bundled UTF-8 text asset.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Assets.readText(relativePath: string): string</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can show text from a file bundled with the extension.
+
+```ts
+// Show text from a file bundled with the extension.
+const license = SpotifyPlus.Assets.readText('data/license.txt');
+const firstLine = license.split('\n')[0];
+
+console.log('License:', firstLine);
+SpotifyPlus.toast('License loaded');
+```
+
+## Parameters
+
+`relativePath`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+A path to a file declared in `manifest.assets`.
+
+## Returns
+
+`string`
+
+The file contents as a string.
+
+## Remarks
+
+The file must be declared in manifest.assets.

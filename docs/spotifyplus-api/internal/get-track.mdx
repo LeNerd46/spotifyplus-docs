@@ -1,0 +1,51 @@
+---
+sidebar_label: 'getTrack()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Internal.getTrack()
+
+Gets detailed information about a track.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Internal.getTrack(uri: string): Promise&lt;<a href="/docs/types/spotify-track">SpotifyTrack</a> | null&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can fetch full metadata for the currently playing song.
+
+```ts
+// Get the user's saved playlists
+const savedPlaylists = await SpotifyPlus.Library.list({ type: 'playlist' });
+
+// Get the user's first playlist
+const playlist = await SpotifyPlus.Internal.getPlaylist(savedPlaylists.items[0].uri);
+
+// Make sure there are at least five songs in the playlist
+if(playlist.items.length < 5) return;
+
+// Get the information for the fifth song
+const track = await SpotifyPlus.Internal.getTrack(playlist.items[4].uri);
+if(!track) return;
+
+console.log(track.displayName);
+```
+
+## Parameters
+
+`uri`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The URI of the Spotify item.
+
+## Returns
+
+`Promise<SpotifyTrack | null>`
+
+A SpotifyTrack, or null if unavailable.

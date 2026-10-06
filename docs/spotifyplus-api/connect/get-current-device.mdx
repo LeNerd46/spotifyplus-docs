@@ -1,0 +1,44 @@
+---
+sidebar_label: 'getCurrentDevice()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Connect.getCurrentDevice()
+
+Gets the active Spotify Connect device.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Connect.getCurrentDevice(): <a href="/docs/types/api-types#connectdevice">ConnectDevice</a> | null</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can show the device currently playing music.
+
+```ts
+// Show the device currently playing music.
+const device = SpotifyPlus.Connect.getCurrentDevice();
+if (!device) {
+  SpotifyPlus.toast('No active playback device');
+  return;
+}
+
+SpotifyPlus.toast(`Playing on ${device.name}`);
+console.log('Raw volume:', device.volume);
+```
+
+## Parameters
+
+None.
+## Returns
+
+`ConnectDevice | null`
+
+The active device, or null if none is active.
+
+
+Returns Spotify's latest observed device snapshot synchronously. Throws until the Connect service has supplied its first snapshot. Device transfer remains asynchronous.

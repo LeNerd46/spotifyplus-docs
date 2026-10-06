@@ -1,0 +1,54 @@
+---
+sidebar_label: 'open()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Navigation.open()
+
+Opens a URI in the most appropriate app or a selected target.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Navigation.open(uri: string, options?: <a href="/docs/types/navigation-options">NavigationOptions</a>): boolean</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can open an album inside Spotify if search finds one.
+
+```ts
+// Open an album inside Spotify if search finds one.
+const results = await SpotifyPlus.Search.search('After Hours');
+const album = results.items.find(item => item.uri.startsWith('spotify:album:'));
+if (!album) return;
+
+const opened = SpotifyPlus.Navigation.open(album.uri, { target: 'spotify' });
+if (!opened) SpotifyPlus.toast('Could not open the album');
+```
+
+## Parameters
+
+`uri`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The absolute URI to open.
+
+`options`
+
+<Badge href="/docs/types/navigation-options">NavigationOptions</Badge> <Badge variant="neutral">Optional</Badge>
+
+Optional app target: `auto`, `spotify`, or `external`.
+
+## Returns
+
+`boolean`
+
+True if navigation was accepted.
+
+## Remarks
+
+Target can be auto, spotify, or external. The default is auto.

@@ -1,0 +1,48 @@
+---
+sidebar_label: 'readJson()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Assets.readJson()
+
+Parses a bundled JSON asset.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Assets.readJson&lt;T = unknown&gt;(relativePath: string): T</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can read bundled defaults and use them for an extension preference.
+
+```ts
+// Read bundled defaults and use them for an extension preference.
+type Defaults = { showTrackToasts: boolean };
+const defaults = SpotifyPlus.Assets.readJson<Defaults>('data/defaults.json');
+
+const saved = SpotifyPlus.Platform.Storage.get<boolean>('showTrackToasts');
+const enabled = saved ?? defaults.showTrackToasts;
+console.log('Track toasts enabled:', enabled);
+```
+
+## Parameters
+
+`relativePath`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The declared JSON file to parse.
+
+## Returns
+
+`T`
+
+The parsed JSON value.
+
+## Remarks
+
+The file must be declared in manifest.assets.

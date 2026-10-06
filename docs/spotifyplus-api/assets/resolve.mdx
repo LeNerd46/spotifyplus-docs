@@ -1,0 +1,47 @@
+---
+sidebar_label: 'resolve()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Assets.resolve()
+
+Resolves a bundled asset.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Assets.resolve(relativePath: string): <a href="/docs/types/extension-assets#extensionasset">ExtensionAsset</a></span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can resolve a declared audio file for use elsewhere in the extension.
+
+```ts
+// Resolve a declared audio file for use elsewhere in the extension.
+const alert = SpotifyPlus.Assets.resolve('sounds/alert.mp3');
+
+console.log(alert.name);
+console.log(alert.mimeType);
+console.log('Asset URI:', alert.uri);
+```
+
+## Parameters
+
+`relativePath`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+A path to a file declared in `manifest.assets`.
+
+## Returns
+
+`ExtensionAsset`
+
+An asset reference with URI, name, and MIME type.
+
+## Remarks
+
+The file must be declared in manifest.assets.

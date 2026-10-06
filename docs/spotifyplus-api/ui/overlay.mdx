@@ -1,0 +1,65 @@
+---
+sidebar_label: 'overlay()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# UI.overlay()
+
+Displays a React component over a supported UI target.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.UI.overlay(target: <a href="/docs/types/ui-targets#uitarget">UITarget</a>, component: React.ComponentType&lt;<a href="/docs/types/ui-targets#uicomponentprops">UIComponentProps</a>&gt;): <a href="/docs/types/ui-targets#uiregistration">UIRegistration</a></span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can place a small status label over the Now Playing page.
+
+```tsx
+import { SpotifyPlus } from 'spotifyplus';
+import { Text } from 'spotifyplus/react';
+
+// Place a small status label over the Now Playing page.
+function Status() { return <Text>Live</Text>; }
+
+async function install() {
+  const info = await SpotifyPlus.UI.inspect('nowPlaying.page');
+  if (!info.available || !info.operations.includes('overlay')) return;
+  
+  const registration = SpotifyPlus.UI.overlay('nowPlaying.page', Status);
+  // Dispose the registration when the overlay is no longer needed.
+}
+void install().catch(console.error);
+```
+
+## Parameters
+
+`target`
+
+<Badge href="/docs/types/ui-targets#uitarget">UITarget</Badge> <Badge variant="danger">Required</Badge>
+
+The named Spotify UI target or a target selector.
+
+`component`
+
+<Badge>React.ComponentType&lt;UIComponentProps&gt;</Badge> <Badge variant="danger">Required</Badge>
+
+The React component to mount at the target.
+
+## Returns
+
+`UIRegistration`
+
+A registration that can be disposed.
+
+## Remarks
+
+Check inspect() for target availability and supported operations.
+
+An overlay coexists with the target's native content or winning replacement. Do not mount `Original` in an overlay. Decorative overlays can use `pointerEvents="none"` to pass touches through; keep interactive overlays limited to their intended touch area.
+
+See [UI targets](./index.md) for current support, lifecycle, native content rules, and extension ordering.

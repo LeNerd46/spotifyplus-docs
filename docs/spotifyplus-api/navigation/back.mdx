@@ -1,0 +1,39 @@
+---
+sidebar_label: 'back()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Navigation.back()
+
+Navigates back from the current Spotify destination or overlay.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Navigation.back(): boolean</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can return from a page opened by the extension.
+
+```ts
+// Return from a page opened by the extension.
+SpotifyPlus.Navigation.openSpotify('spotify:album:4aawyAB9vmqN3uQ7FjRGTy');
+
+// Later, after the user is done with that page:
+const handled = SpotifyPlus.Navigation.back();
+if (!handled) console.log('There is no Spotify page to return to');
+```
+
+## Returns
+
+`boolean`
+
+True if a back action was handled.
+
+## Remarks
+
+Pretty much just programmatically hitting the back button on Android

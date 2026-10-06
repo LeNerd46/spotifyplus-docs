@@ -1,0 +1,47 @@
+---
+sidebar_label: 'font()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Assets.font()
+
+Resolves a bundled font.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Assets.font(relativePath: string): <a href="/docs/types/extension-assets#extensionfontasset">ExtensionFontAsset</a></span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can resolve a custom font declared in manifest.assets.
+
+```ts
+// Resolve a custom font declared in manifest.assets.
+const font = SpotifyPlus.Assets.font('fonts/Brand.ttf');
+
+console.log('Loaded font:', font.name);
+console.log('MIME type:', font.mimeType);
+// Pass this asset to code that accepts an ExtensionFontAsset.
+```
+
+## Parameters
+
+`relativePath`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+A path to a file declared in `manifest.assets`.
+
+## Returns
+
+`ExtensionFontAsset`
+
+A font asset reference.
+
+## Remarks
+
+Supports TTF, OTF, and TTC files declared in manifest.assets.

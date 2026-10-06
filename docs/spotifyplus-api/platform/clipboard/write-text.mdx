@@ -1,0 +1,46 @@
+---
+sidebar_label: 'writeText()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Platform.Clipboard.writeText()
+
+Writes text to the Android clipboard.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Platform.Clipboard.writeText(text: string): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can let the user copy the URI of the current song.
+
+```ts
+// Let the user copy the URI of the current song.
+const track = SpotifyPlus.Player.getCurrentTrack();
+if (!track.uri) return;
+
+SpotifyPlus.Platform.Clipboard.writeText(track.uri);
+SpotifyPlus.toast('Track URI copied');
+```
+
+## Parameters
+
+`text`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The text to use.
+
+## Returns
+
+`void`
+
+Returns after the text is written.
+
+
+Calls Android's clipboard service synchronously. Use `try/catch` for service errors.

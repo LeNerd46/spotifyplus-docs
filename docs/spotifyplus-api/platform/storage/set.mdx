@@ -1,0 +1,43 @@
+---
+sidebar_label: 'set()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Platform.Storage.set()
+
+Stores a preference for this extension. This is not writing a file, this is storing a preference. Useful for user settings.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Platform.Storage.set(key: string, value: any): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can save a user preference when they enable a feature.
+
+```ts
+// Save a user preference when they enable a feature.
+const enabled = true;
+SpotifyPlus.Platform.Storage.set('showTrackToasts', enabled);
+
+// The preference is scoped to this extension.
+console.log('Track toasts enabled:', enabled);
+```
+
+## Parameters
+
+`key`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The extension-scoped preference key.
+
+`value`
+
+<Badge>any</Badge> <Badge variant="danger">Required</Badge>
+
+The value to store.

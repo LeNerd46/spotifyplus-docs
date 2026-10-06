@@ -1,0 +1,39 @@
+---
+sidebar_label: 'clear()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Platform.Clipboard.clear()
+
+Clears the Android clipboard.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Platform.Clipboard.clear(): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can clear a URI the extension just placed on the clipboard.
+
+```ts
+// Clear a URI the extension just placed on the clipboard.
+const track = SpotifyPlus.Player.getCurrentTrack();
+if (!track.uri) return;
+
+SpotifyPlus.Platform.Clipboard.writeText(track.uri);
+// After the user finishes sharing it:
+SpotifyPlus.Platform.Clipboard.clear();
+```
+
+## Returns
+
+`void`
+
+Returns after the clipboard is cleared.
+
+
+Calls Android's clipboard service synchronously. Use `try/catch` for service errors.

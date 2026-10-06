@@ -1,0 +1,49 @@
+---
+sidebar_label: 'once()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Events.once()
+
+Subscribes to a single event occurrence.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Events.once(eventName: string, handler: <a href="/docs/types/event-handlers">ExtensionEventHandler</a>): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can greet the user only on the next song change.
+
+```ts
+// Greet the user only on the next song change.
+SpotifyPlus.Events.once('songChanged', async ({ uri }) => {
+  if (!uri) return;
+  const track = await SpotifyPlus.Internal.getTrack(uri);
+  if (track) SpotifyPlus.toast(`Now playing: ${track.title}`);
+});
+
+// The listener removes itself after that event.
+```
+
+## Parameters
+
+`eventName`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The event name to listen for or emit.
+
+`handler`
+
+<Badge href="/docs/types/event-handlers">ExtensionEventHandler</Badge> <Badge variant="danger">Required</Badge>
+
+The callback to invoke for this event.
+
+## Remarks
+
+The listener is removed after the first event.

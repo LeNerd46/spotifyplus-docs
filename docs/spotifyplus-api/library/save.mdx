@@ -1,0 +1,51 @@
+---
+sidebar_label: 'save()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Library.save()
+
+Saves one or more Spotify items to the library.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Library.save(items: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a> | <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>[]): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can find an album, then save it to the user's library.
+
+```ts
+// Find an album, then save it to the user's library.
+const results = await SpotifyPlus.Search.search('After Hours');
+const album = results.items.find(item => item.uri.startsWith('spotify:album:'));
+if (!album) return;
+
+SpotifyPlus.Library.save(album.uri);
+SpotifyPlus.toast(`Saved ${album.text}`);
+```
+
+## Parameters
+
+`items`
+
+<Badge>SpotifyUriInput | SpotifyUriInput[]</Badge> <Badge variant="danger">Required</Badge>
+
+One item or an array of items to process.
+
+## Returns
+
+`void`
+
+Returns after the save request completes.
+
+## Remarks
+
+Accepts one URI or an array of URIs.
+
+
+This is a synchronous local call. It reads or updates Spotify's local library and throws on service errors. Spotify handles account synchronization separately.

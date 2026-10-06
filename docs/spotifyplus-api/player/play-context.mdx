@@ -1,0 +1,88 @@
+---
+sidebar_label: 'playContext()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Player.playContext()
+
+Plays a song from an album or playlist
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Player.playContext(context: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>, index?: number): Promise&lt;void&gt;</span>
+</CodeBlock>
+
+## Examples
+
+This will get the user's first saved playlist, then play the fifth song
+
+```ts
+// Get all of the user's saved playlists
+const playlists = await SpotifyPlus.Library.list({ type: 'playlist' });
+
+// Make sure the user has at least one playlist saved
+if (playlists.items.length === 0) return;
+
+// Get the playlist information
+const playlist = await SpotifyPlus.Playlists.get(playlists.items[0].uri);
+
+// Make sure that there are at least 5 songs in this playlist
+if (playlist.total < 5) return;
+
+// Play the fifth song in the playlist
+await SpotifyPlus.Player.playContext(playlist.uri, 4);
+```
+
+The following example searches for an album, and then plays the first result
+
+```ts
+// Search for the album
+const searchResults = await SpotifyPlus.Search.search('After Hours');
+
+// Find the first album in the search results
+const album = searchResults.items.find(item => item.uri.startsWith('spotify:album:'));
+if (!album) return;
+
+// Play the album from the beginning
+await SpotifyPlus.Player.playContext(album.uri);
+```
+
+## Parameters
+
+`context`
+
+<Badge href="/docs/types/spotify-uri-input">SpotifyUriInput</Badge> <Badge variant="danger">Required</Badge>
+
+The URI of the album or playlist to play
+
+`index`
+
+<Badge>number</Badge> <Badge variant="neutral">Optional</Badge>
+
+The index to start playing at
+
+## Returns
+
+`Promise<void>`
+
+A promise that resolves when the play request completes sucessfully.
+
+## Exceptions
+
+| Exception   | Condition                                                |
+| :--------   | :------------------------------------------------------- |
+| `TypeError` | The URI was not a valid Spotify URI                      |
+| `TypeError` | The URI does not reference an album or playlist          |
+| `TypeError` | The index is negative, fractional, or not a safe integer |
+
+## Remarks
+
+If no index was provided, `playContext()` will begin at the first song on the album/playlist
+
+The track index is zero based. So an index of 3 will play the 4th song on the album/playlist.
+
+
+This method remains asynchronous because starting a context may require Spotify to load tracks from the network. The other Player commands are synchronous.

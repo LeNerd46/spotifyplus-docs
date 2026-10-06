@@ -1,0 +1,59 @@
+---
+sidebar_label: 'move()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Playlists.move()
+
+Reorders a playlist in the current user’s library.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Playlists.move(playlist: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>, before?: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can move the second saved playlist ahead of the first.
+
+```ts
+// Move the second saved playlist ahead of the first.
+const saved = await SpotifyPlus.Library.list({ type: 'playlist', limit: 2 });
+if (saved.items.length < 2) return;
+
+const first = saved.items[0];
+const second = saved.items[1];
+SpotifyPlus.Playlists.move(second.uri, first.uri);
+
+SpotifyPlus.toast(`${second.name} moved to the top`);
+```
+
+## Parameters
+
+`playlist`
+
+<Badge href="/docs/types/spotify-uri-input">SpotifyUriInput</Badge> <Badge variant="danger">Required</Badge>
+
+The playlist to read or change.
+
+`before`
+
+<Badge href="/docs/types/spotify-uri-input">SpotifyUriInput</Badge> <Badge variant="neutral">Optional</Badge>
+
+The playlist that should follow the moved playlist. Omit it to move to the beginning.
+
+## Returns
+
+`void`
+
+Returns after the reorder request completes.
+
+## Remarks
+
+Do not include `before` to move the playlist to the beginning.
+
+
+This is a synchronous local modification. It throws if Spotify rejects the operation. The result acknowledges the local playlist change; Spotify synchronizes the account separately. Playlist loading with `Playlists.get()` remains asynchronous.

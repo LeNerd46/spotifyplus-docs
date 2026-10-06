@@ -1,0 +1,47 @@
+---
+sidebar_label: 'add()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Queue.add()
+
+Adds one or more items to the playback queue.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Queue.add(items: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a> | <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>[]): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can find a track and put it at the end of the queue.
+
+```ts
+// Find a track and put it at the end of the queue.
+const results = await SpotifyPlus.Search.search('Blinding Lights');
+const track = results.items.find(item => item.uri.startsWith('spotify:track:'));
+if (!track) return;
+
+SpotifyPlus.Queue.add(track.uri);
+SpotifyPlus.toast(`Queued ${track.text}`);
+```
+
+## Parameters
+
+`items`
+
+<Badge>SpotifyUriInput | SpotifyUriInput[]</Badge> <Badge variant="danger">Required</Badge>
+
+One URI or an array of URIs to queue.
+
+## Returns
+
+`void`
+
+Returns after the local queue accepts the items.
+
+
+This is a synchronous local call. It throws if the queue is not ready or Spotify rejects the operation. Edits acknowledge the local queue change; they do not wait for playback on another device.

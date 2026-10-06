@@ -1,0 +1,59 @@
+---
+sidebar_label: 'inspect()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# UI.inspect()
+
+Inspects a UI target in the installed Spotify build.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.UI.inspect(target: <a href="/docs/types/ui-targets#uitarget">UITarget</a>): Promise&lt;<a href="/docs/types/ui-targets#uitargetinfo">UITargetInfo</a>&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can check what the installed Spotify build supports.
+
+```ts
+import { SpotifyPlus } from 'spotifyplus';
+
+// Check what the installed Spotify build supports.
+async function install() {
+  const info = await SpotifyPlus.UI.inspect('contextMenu.header');
+  if (!info.available) {
+    SpotifyPlus.warn(info.reason ?? 'Header target unavailable');
+    return;
+  }
+  
+  console.log('Supported operations:', info.operations);
+  console.log('Active instances:', info.instances);
+}
+void install().catch(console.error);
+```
+
+## Parameters
+
+`target`
+
+<Badge href="/docs/types/ui-targets#uitarget">UITarget</Badge> <Badge variant="danger">Required</Badge>
+
+The named Spotify UI target or a target selector.
+
+## Returns
+
+`Promise<UITargetInfo>`
+
+Availability, supported operations, instance count, and conflicts.
+
+## Remarks
+
+A target may be unavailable on some Spotify versions.
+
+`available` indicates installed adapter support, while `instances` counts live boundaries. Zero instances is normal before the screen opens. An operation must also appear in `operations`. Conflicts list the winning and suppressed replacement extension IDs for live instances.
+
+See [UI targets](./index.md) for current support, lifecycle, native content rules, and extension ordering.

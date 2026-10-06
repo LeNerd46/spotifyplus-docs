@@ -1,0 +1,56 @@
+---
+sidebar_label: 'registerSettings()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Settings.registerSettings()
+
+Registers multiple settings sections.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Settings.registerSettings(settings: <a href="/docs/types/extension-settings#extensionsettingsection">ExtensionSettingSection</a>[]): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can register separate sections for general and display preferences.
+
+```ts
+// Register separate sections for general and display preferences.
+SpotifyPlus.Settings.registerSettings([
+    {
+        title: 'General',
+        items: [
+            {
+                type: 'toggle',
+                id: 'enabled',
+                label: 'Enabled',
+                value: true
+            }
+        ]
+    },
+    {
+        title: 'Display',
+        items: [
+            {
+                type: 'text',
+                id: 'greeting',
+                label: 'Greeting',
+                value: 'Hello'
+            }
+        ]
+    },
+]);
+```
+
+## Parameters
+
+`settings`
+
+<Badge>ExtensionSettingSection[]</Badge> <Badge variant="danger">Required</Badge>
+
+The sections to register.

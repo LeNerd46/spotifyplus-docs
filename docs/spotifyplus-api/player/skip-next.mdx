@@ -1,0 +1,44 @@
+---
+sidebar_label: 'skipNext()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Player.skipNext()
+
+Skips to the next track in the queue.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Player.skipNext(): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can skip ahead only if a song is already in the queue.
+
+```ts
+// Skip ahead only if a song is already in the queue.
+const queue = SpotifyPlus.Queue.get();
+if (queue.next.length === 0) {
+  SpotifyPlus.toast('Nothing is queued next');
+  return;
+}
+
+SpotifyPlus.Player.skipNext();
+SpotifyPlus.toast('Skipped to the next song');
+```
+
+## Returns
+
+`void`
+
+Returns after the skip request completes.
+
+## Remarks
+
+This may not work until the user has played a song (i.e. it may not work if the user just opened Spotify and has not played a song yet).
+
+This is a synchronous local call. It throws if the player is not ready or Spotify rejects the command. Use `try/catch` for errors. Playback state and events can update after the call returns.

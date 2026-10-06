@@ -1,0 +1,31 @@
+---
+sidebar_label: 'listInstances()'
+---
+
+# UI.listInstances()
+
+Returns a snapshot of live contexts matching a target, even when your extension has no replacement registered.
+
+## Syntax
+
+```ts
+SpotifyPlus.UI.listInstances(target: UITarget): Promise<UIInstance[]>
+```
+
+`UITarget` and `UIInstance` are described in [UI target types](../../types/ui-targets.md).
+
+## Example
+
+```ts
+import { SpotifyPlus } from 'spotifyplus';
+
+async function inspectDrawers() {
+  const instances = await SpotifyPlus.UI.listInstances('navigation.drawer');
+  for (const { target, context } of instances) {
+    console.log(target, context.instanceId, context.parts ?? []);
+  }
+}
+void inspectDrawers().catch(console.error);
+```
+
+An empty array means no matching live instance. Open the drawer/menu before inspecting its parts. This is a snapshot, not a subscription. Re-read it when needed; part IDs expire when the model changes or the instance closes. Inside a UI component, prefer its current `context` props.

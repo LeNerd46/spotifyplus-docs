@@ -1,0 +1,46 @@
+---
+sidebar_label: 'isLiked()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Library.isLiked()
+
+Checks whether a track is in liked songs.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Library.isLiked(track: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>): boolean</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can show whether the current track is in liked songs.
+
+```ts
+// Show whether the current track is in liked songs.
+const track = SpotifyPlus.Player.getCurrentTrack();
+if (!track.uri) return;
+
+const liked = SpotifyPlus.Library.isLiked(track);
+SpotifyPlus.toast(liked ? 'Song is already liked' : 'Not yet liked');
+```
+
+## Parameters
+
+`track`
+
+<Badge href="/docs/types/spotify-uri-input">SpotifyUriInput</Badge> <Badge variant="danger">Required</Badge>
+
+The Spotify URI of the track.
+
+## Returns
+
+`boolean`
+
+True when the track is liked.
+
+
+This is a synchronous local call. It reads or updates Spotify's local library and throws on service errors. Spotify handles account synchronization separately.

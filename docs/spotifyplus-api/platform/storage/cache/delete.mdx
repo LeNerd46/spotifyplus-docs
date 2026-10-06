@@ -1,0 +1,37 @@
+---
+sidebar_label: 'delete()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Platform.Storage.Cache.delete()
+
+Deletes a temporary cache file.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Platform.Storage.Cache.delete(path: string): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can discard old search results after a fresh search.
+
+```ts
+// Discard old search results after a fresh search.
+const results = await SpotifyPlus.Search.search('After Hours');
+if (results.items.length > 0) {
+  SpotifyPlus.Platform.Storage.Cache.delete('search/after-hours.json');
+  console.log('Removed stale search cache');
+}
+```
+
+## Parameters
+
+`path`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+A path relative to this extension’s storage area.

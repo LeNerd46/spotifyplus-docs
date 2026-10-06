@@ -1,0 +1,47 @@
+---
+sidebar_label: 'like()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Library.like()
+
+Adds a track to liked songs.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Library.like(track: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can like the song currently playing, if it is not already liked.
+
+```ts
+// Like the song currently playing, if it is not already liked.
+const track = SpotifyPlus.Player.getCurrentTrack();
+if (!track.uri) return;
+
+if (!(SpotifyPlus.Library.isLiked(track))) {
+  SpotifyPlus.Library.like(track);
+  SpotifyPlus.toast(`Liked ${track.title}`);
+}
+```
+
+## Parameters
+
+`track`
+
+<Badge href="/docs/types/spotify-uri-input">SpotifyUriInput</Badge> <Badge variant="danger">Required</Badge>
+
+The Spotify URI of the track.
+
+## Returns
+
+`void`
+
+Returns after the local library accepts the change.
+
+This is a synchronous local call. It reads or updates Spotify's local library and throws on service errors. Spotify handles account synchronization separately.

@@ -1,0 +1,51 @@
+---
+sidebar_label: 'image()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Assets.image()
+
+Resolves a bundled image.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Assets.image(relativePath: string): <a href="/docs/types/extension-assets#extensionasset">ExtensionAsset</a></span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can resolve a declared icon and use it in the side drawer.
+
+```tsx
+import { Text } from 'spotifyplus/react';
+
+// Resolve a declared icon and use it in the side drawer.
+const icon = SpotifyPlus.Assets.image('images/heart.png');
+
+new SpotifyPlus.SideDrawer(
+  'Liked Songs helper',
+  () => <Text>Liked Songs helper</Text>,
+  icon
+).register();
+```
+
+## Parameters
+
+`relativePath`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+A path to a file declared in `manifest.assets`.
+
+## Returns
+
+`ExtensionAsset`
+
+An image asset reference.
+
+## Remarks
+
+Supported formats include PNG, JPEG, GIF, WebP, and BMP. The file must be declared in manifest.assets.

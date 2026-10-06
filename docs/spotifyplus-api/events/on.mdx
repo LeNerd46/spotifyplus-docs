@@ -1,0 +1,50 @@
+---
+sidebar_label: 'on()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Events.on()
+
+Subscribes to Spotify state or extension events.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Events.on(eventName: string, handler: <a href="/docs/types/event-handlers">ExtensionEventHandler</a>): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can update a stored URI whenever Spotify changes songs.
+
+```ts
+// Update a stored URI whenever Spotify changes songs.
+const onSongChanged = ({ uri }: { uri: string | null }) => {
+  if (!uri) return;
+  SpotifyPlus.Platform.Storage.set('lastTrackUri', uri);
+  console.log('New track:', uri);
+};
+
+SpotifyPlus.Events.on('songChanged', onSongChanged);
+// Keep the same function reference if you later call Events.off().
+```
+
+## Parameters
+
+`eventName`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The event name to listen for or emit.
+
+`handler`
+
+<Badge href="/docs/types/event-handlers">ExtensionEventHandler</Badge> <Badge variant="danger">Required</Badge>
+
+The callback to invoke for this event.
+
+## Remarks
+
+Spotify events include songChanged, contextChanged, playPause, trackSeeked, shuffleChanged, repeatChanged, and deviceChanged.

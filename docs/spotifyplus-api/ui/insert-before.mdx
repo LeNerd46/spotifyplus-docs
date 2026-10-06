@@ -1,0 +1,67 @@
+---
+sidebar_label: 'insertBefore()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# UI.insertBefore()
+
+Inserts a React component before a supported UI target.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.UI.insertBefore(target: <a href="/docs/types/ui-targets#uitarget">UITarget</a>, component: React.ComponentType&lt;<a href="/docs/types/ui-targets#uicomponentprops">UIComponentProps</a>&gt;): <a href="/docs/types/ui-targets#uiregistration">UIRegistration</a></span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can add a banner before the supported menu header.
+
+```tsx
+import { SpotifyPlus } from 'spotifyplus';
+import { Text } from 'spotifyplus/react';
+
+// Add a banner before the supported menu header.
+function Banner() { 
+  return <Text>Welcome back!</Text>; 
+}
+
+async function install() {
+  const info = await SpotifyPlus.UI.inspect('contextMenu.header');
+  if (!info.available || !info.operations.includes('before')) return;
+  
+  const registration = SpotifyPlus.UI.insertBefore('contextMenu.header', Banner);
+  // Remove it later with registration.dispose().
+}
+void install().catch(console.error);
+```
+
+## Parameters
+
+`target`
+
+<Badge href="/docs/types/ui-targets#uitarget">UITarget</Badge> <Badge variant="danger">Required</Badge>
+
+The named Spotify UI target or a target selector.
+
+`component`
+
+<Badge>React.ComponentType&lt;UIComponentProps&gt;</Badge> <Badge variant="danger">Required</Badge>
+
+The React component to mount at the target.
+
+## Returns
+
+`UIRegistration`
+
+A registration that can be disposed.
+
+## Remarks
+
+Check inspect() for target availability and supported operations.
+
+Page targets currently do not support insertions. Use a supported drawer/menu boundary and check for the `before` operation. Insertions coexist in priority order and cannot mount `Original`.
+
+See [UI targets](./index.md) for current support, lifecycle, native content rules, and extension ordering.

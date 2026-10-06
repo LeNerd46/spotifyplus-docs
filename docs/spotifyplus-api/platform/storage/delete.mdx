@@ -1,0 +1,39 @@
+---
+sidebar_label: 'delete()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Platform.Storage.delete()
+
+Deletes a file from your extension's storage.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Platform.Storage.delete(path: string): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can remove a file when the user clears their history.
+
+```ts
+// Remove a file when the user clears their history.
+const path = 'history/last-played.json';
+const previous = SpotifyPlus.Platform.Storage.read(path);
+
+if (previous !== null) {
+  SpotifyPlus.Platform.Storage.delete(path);
+  SpotifyPlus.toast('Playback history cleared');
+}
+```
+
+## Parameters
+
+`path`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+A path relative to this extension’s storage area.

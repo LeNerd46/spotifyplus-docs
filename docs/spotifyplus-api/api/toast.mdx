@@ -1,0 +1,47 @@
+---
+sidebar_label: 'toast()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# toast()
+
+Shows an Android toast in Spotify.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.toast(text: string, length?: 'short' | 'long'): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can confirm a successful action to the user.
+
+```ts
+// Confirm a successful action to the user.
+const track = SpotifyPlus.Player.getCurrentTrack();
+if (!track.uri) return;
+
+SpotifyPlus.Library.like(track.uri);
+SpotifyPlus.toast(`Liked ${track.title}`, 'short');
+```
+
+## Parameters
+
+`text`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The message to display.
+
+`length`
+
+<Badge>'short' | 'long'</Badge> <Badge variant="neutral">Optional</Badge>
+
+How long the toast should be visible. Defaults to `short`.
+
+## Remarks
+
+The length defaults to short.

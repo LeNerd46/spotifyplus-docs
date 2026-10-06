@@ -1,0 +1,43 @@
+---
+sidebar_label: 'emit()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# emit()
+
+Sends an event through the host bridge. This allows your extension to send events to other parts of your extension, or other extensions.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.emit(eventName: string, payload?: unknown): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can notify the host about an extension-specific action.
+
+```ts
+// Notify the host about an extension-specific action.
+const track = SpotifyPlus.Player.getCurrentTrack();
+if (!track.uri) return;
+
+SpotifyPlus.emit('extension.trackSelected', { uri: track.uri });
+console.log('Sent track selection to host');
+```
+
+## Parameters
+
+`eventName`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The event name to listen for or emit.
+
+`payload`
+
+<Badge>unknown</Badge> <Badge variant="neutral">Optional</Badge>
+
+Optional data to send with the event or request.

@@ -1,0 +1,39 @@
+---
+sidebar_label: 'warn()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# warn()
+
+Writes a warning tagged with this extension. Literally the same as `console.warn()`.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.warn(...args: unknown[]): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can explain why an optional feature cannot run yet.
+
+```ts
+// Explain why an optional feature cannot run yet.
+const device = SpotifyPlus.Connect.getCurrentDevice();
+if (!device) {
+  SpotifyPlus.warn('No active Connect device; transfer action is unavailable');
+  return;
+}
+
+SpotifyPlus.log('Active device:', device.name);
+```
+
+## Parameters
+
+`args`
+
+<Badge>unknown[]</Badge> <Badge variant="danger">Required</Badge>
+
+The values to include in the log entry.

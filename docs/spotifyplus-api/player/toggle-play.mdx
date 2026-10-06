@@ -1,0 +1,37 @@
+---
+sidebar_label: 'togglePlay()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Player.togglePlay()
+
+Toggles play and pause for the current track.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Player.togglePlay(): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can use the current state to label a play/pause action.
+
+```ts
+// Use the current state to label a play/pause action.
+const before = SpotifyPlus.Player.getState();
+SpotifyPlus.Player.togglePlay();
+
+SpotifyPlus.toast(before.isPlaying ? 'Paused' : 'Playing');
+```
+
+## Returns
+
+`void`
+
+Returns after the toggle request completes.
+
+
+This is a synchronous local call. It throws if the player is not ready or Spotify rejects the command. Use `try/catch` for errors. Playback state and events can update after the call returns.

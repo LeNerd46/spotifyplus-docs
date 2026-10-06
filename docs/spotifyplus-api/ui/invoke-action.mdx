@@ -1,0 +1,43 @@
+---
+sidebar_label: 'invokeAction()'
+---
+
+# UI.invokeAction()
+
+Dispatches a live Spotify action from a drawer/menu part. Spotify handles dismissal, navigation, and any secondary native picker or menu. The native row does not need to appear in your replacement.
+
+## Syntax
+
+```ts
+SpotifyPlus.UI.invokeAction(instanceId: string, partId: string): Promise<void>
+```
+
+Use the current `context.instanceId` and an enabled `kind: 'action'` part's opaque `id`, not its `semanticId` or title.
+
+## Example
+
+```tsx
+import { SpotifyPlus, type UIComponentProps } from 'spotifyplus';
+import { ScrollView, View, Button } from 'spotifyplus/react';
+
+function Actions({ context }: UIComponentProps) {
+  return (
+    <ScrollView style={{ flex: 1 }}>
+      <View style={{ width: '100%' }}>
+        {(context.parts ?? []).filter(part => part.kind === 'action').map(part => (
+          <Button key={part.id} text={part.title ?? part.semanticId}
+            disabled={!part.enabled}
+            onPress={() => {
+              void SpotifyPlus.UI.invokeAction(context.instanceId, part.id)
+                .catch(console.error);
+            }} />
+        ))}
+      </View>
+    </ScrollView>
+  );
+}
+```
+
+Register `Actions` as a supported `contextMenu.root` or `navigation.drawer` replacement after checking `inspect()`. Include native content parts with `NativePart` if your layout needs them.
+
+Closed instances, expired/wrong-instance IDs, disabled/content parts, and unloaded callers reject the promise. Do not cache IDs between model updates. A hidden native element may be composed to obtain its handler. Resolution acknowledges dispatch, not completion of a native asynchronous flow such as choosing a sleep-timer duration.

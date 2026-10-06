@@ -1,0 +1,56 @@
+---
+sidebar_label: 'register()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Surfaces.register()
+
+Registers a React renderer for a scripted surface.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Surfaces.register(surfaceType: string, renderer: <a href="/docs/types/surface-renderer">SurfaceRenderer</a>&lt;any&gt;): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can render the extension's lyrics panel when that surface opens.
+
+```tsx
+import { Text } from 'spotifyplus/react';
+
+// Render the extension's lyrics panel when that surface opens.
+function MyLyricsPanel() {
+  const track = SpotifyPlus.Player.getCurrentTrack();
+  return <Text>{track.title}</Text>;
+}
+
+SpotifyPlus.Surfaces.register('lyrics-view', () => <MyLyricsPanel />);
+```
+
+## Parameters
+
+`surfaceType`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The scripted surface type that triggers the renderer.
+
+`renderer`
+
+<Badge>SurfaceRenderer&lt;any&gt;</Badge> <Badge variant="danger">Required</Badge>
+
+The function that returns a React element for this surface.
+
+## Returns
+
+`void`
+
+Nothing.
+
+## Remarks
+
+Use a TSX file for a renderer that returns JSX. Register a surface type that Spotify Plus actually opens, such as `lyrics-view`.

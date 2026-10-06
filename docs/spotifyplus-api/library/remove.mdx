@@ -1,0 +1,51 @@
+---
+sidebar_label: 'remove()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Library.remove()
+
+Removes one or more Spotify items from the library.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Library.remove(items: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a> | <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>[]): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can find a saved album by its name.
+
+```ts
+// Find a saved album by its name.
+const page = await SpotifyPlus.Library.list({ type: 'album' });
+const album = page.items.find(item => item.name === 'After Hours');
+if (!album) return;
+
+SpotifyPlus.Library.remove(album.uri);
+SpotifyPlus.toast(`Removed ${album.name} from your library`);
+```
+
+## Parameters
+
+`items`
+
+<Badge>SpotifyUriInput | SpotifyUriInput[]</Badge> <Badge variant="danger">Required</Badge>
+
+One item or an array of items to process.
+
+## Returns
+
+`void`
+
+Returns after the removal request completes.
+
+## Remarks
+
+Accepts one URI or an array of URIs.
+
+
+This is a synchronous local call. It reads or updates Spotify's local library and throws on service errors. Spotify handles account synchronization separately.

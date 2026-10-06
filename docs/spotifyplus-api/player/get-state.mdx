@@ -1,0 +1,46 @@
+---
+sidebar_label: 'getState()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Player.getState()
+
+Gets the current playback state
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Player.getState(): <a href='/docs/types/playback-state'>PlaybackState</a></span>
+</CodeBlock>
+
+## Examples
+
+The following example will display different messages based on the current player state
+
+```ts
+const state = SpotifyPlus.Player.getState();
+
+if(state.isBuffering) {
+  console.log('Spotify is buffering');
+} else if(state.isPlaying) {
+  console.log('Spotify is playing');
+} else if(state.isPaused) {
+  console.log('Spotify is paused');
+}
+```
+
+## Returns
+
+<code><a href="/docs/types/playback-state">PlaybackState</a></code>
+<br/>
+<br/>
+
+The current playback state.
+
+## Remarks
+
+If you try calling this method before the user has started playing a song, it may return null (i.e. the user just opened Spotify, and has not played a song yet).
+
+This is a synchronous local call. It throws if the player is not ready or Spotify rejects the command. Use `try/catch` for errors. Playback state and events can update after the call returns.

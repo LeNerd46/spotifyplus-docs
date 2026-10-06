@@ -1,0 +1,39 @@
+---
+sidebar_label: 'remove()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Platform.Storage.remove()
+
+Deletes an preference from your extension's preferences.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Platform.Storage.remove(key: string): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can reset a preference to its default value.
+
+```ts
+// Reset a preference to its default value.
+const key = 'showTrackToasts';
+const oldValue = SpotifyPlus.Platform.Storage.get<boolean>(key);
+
+if (oldValue !== null) {
+  SpotifyPlus.Platform.Storage.remove(key);
+  SpotifyPlus.toast('Preference reset');
+}
+```
+
+## Parameters
+
+`key`
+
+<Badge>string</Badge> <Badge variant="danger">Required</Badge>
+
+The extension-scoped preference key.

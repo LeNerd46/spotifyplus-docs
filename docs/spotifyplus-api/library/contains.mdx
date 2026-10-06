@@ -1,0 +1,49 @@
+---
+sidebar_label: 'contains()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Library.contains()
+
+Checks whether items are saved in the library.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Library.contains(items: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>[]): boolean[]</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can check several search results before showing Save actions.
+
+```ts
+// Check several search results before showing Save actions.
+const results = await SpotifyPlus.Search.search('After Hours');
+const albums = results.items.filter(item => item.uri.startsWith('spotify:album:'));
+if (albums.length === 0) return;
+
+const saved = SpotifyPlus.Library.contains(albums.map(album => album.uri));
+albums.forEach((album, index) => {
+  console.log(album.text, saved[index] ? 'saved' : 'not saved');
+});
+```
+
+## Parameters
+
+`items`
+
+<Badge>SpotifyUriInput[]</Badge> <Badge variant="danger">Required</Badge>
+
+The item URIs to check, in result order.
+
+## Returns
+
+`boolean[]`
+
+A boolean for each input item, in the same order.
+
+
+This is a synchronous local call. It reads or updates Spotify's local library and throws on service errors. Spotify handles account synchronization separately.

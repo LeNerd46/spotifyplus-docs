@@ -1,0 +1,51 @@
+---
+sidebar_label: 'getAlbum()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Internal.getAlbum()
+
+Gets normalized album metadata.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Internal.getAlbum(uri: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>): Promise&lt;<a href="/docs/types/metadata#metadataalbum">MetadataAlbum</a> | null&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can search for an album, then list the songs URIs from the album.
+
+```ts
+// Search for an album, then list its first disc's track URIs.
+const results = await SpotifyPlus.Search.search('After Hours');
+const match = results.items.find(item => item.uri.startsWith('spotify:album:'));
+if (!match) return;
+
+const album = await SpotifyPlus.Internal.getAlbum(match.uri);
+if (!album) return;
+
+console.log(`${album.name} by ${album.artists.map(a => a.name).join(', ')}`);
+for (const uri of album.discs[0]?.tracks ?? []) console.log(uri);
+```
+
+## Parameters
+
+`uri`
+
+<Badge href="/docs/types/spotify-uri-input">SpotifyUriInput</Badge> <Badge variant="danger">Required</Badge>
+
+The URI of the Spotify item.
+
+## Returns
+
+`Promise<MetadataAlbum | null>`
+
+Album metadata, or null if unavailable.
+
+## Remarks
+
+If you want the list of songs on the album, it's under `discs`. idk why, don't ask me

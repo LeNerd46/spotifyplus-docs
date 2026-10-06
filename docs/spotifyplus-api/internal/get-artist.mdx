@@ -1,0 +1,47 @@
+---
+sidebar_label: 'getArtist()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Internal.getArtist()
+
+Gets normalized artist metadata.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Internal.getArtist(uri: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>): Promise&lt;<a href="/docs/types/metadata#metadataartist">MetadataArtist</a> | null&gt;</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can search for an artist, then show their top tracks.
+
+```ts
+// Search for an artist, then show their top tracks.
+const results = await SpotifyPlus.Search.search('Taylor Swift');
+const match = results.items.find(item => item.uri.startsWith('spotify:artist:'));
+if (!match) return;
+
+const artist = await SpotifyPlus.Internal.getArtist(match.uri);
+if (!artist) return;
+
+console.log(artist.name);
+for (const uri of artist.topTracks[0]?.tracks ?? []) console.log(uri);
+```
+
+## Parameters
+
+`uri`
+
+<Badge href="/docs/types/spotify-uri-input">SpotifyUriInput</Badge> <Badge variant="danger">Required</Badge>
+
+The URI of the Spotify item.
+
+## Returns
+
+`Promise<MetadataArtist | null>`
+
+Artist metadata, or null if unavailable.

@@ -1,0 +1,45 @@
+---
+sidebar_label: 'get()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Queue.get()
+
+Gets the current queue and its revision.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Queue.get(): <a href="/docs/types/api-types#queuesnapshot">QueueSnapshot</a></span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can display the next three tracks in the playback queue.
+
+```ts
+// Display the next three tracks in the playback queue.
+const snapshot = SpotifyPlus.Queue.get();
+console.log('Now playing:', snapshot.current?.uri ?? 'nothing');
+
+for (const [index, entry] of snapshot.next.slice(0, 3).entries()) {
+  console.log(`${index + 1}. ${entry.uri}`);
+}
+
+console.log('Queue revision:', snapshot.revision);
+```
+
+## Returns
+
+`QueueSnapshot`
+
+A snapshot containing current, next, previous, and revision.
+
+## Remarks
+
+Queue entries include occurrence IDs, so duplicate tracks remain distinguishable.
+
+
+This is a synchronous local call. It throws if the queue is not ready or Spotify rejects the operation. Edits acknowledge the local queue change; they do not wait for playback on another device.

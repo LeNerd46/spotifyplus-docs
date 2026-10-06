@@ -1,0 +1,54 @@
+---
+sidebar_label: 'getCurrentTrack()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+
+# Player.getCurrentTrack()
+
+Gets the currently playing track.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Player.getCurrentTrack(): <a href='/docs/types/spotify-track'>SpotifyTrack</a></span>
+</CodeBlock>
+
+## Examples
+
+The following example will like the currently playing song.
+
+```ts
+// Get the current track
+const track = SpotifyPlus.Player.getCurrentTrack();
+if(!track) return;
+
+// Like the song
+SpotifyPlus.Library.like(track);
+```
+
+The following example wil create a new playlist, and add the current song to that playlist.
+
+```ts
+// Get the current song
+const track = SpotifyPlus.Player.getCurrentTrack();
+if(!track) return;
+
+// Create a new playlist
+const playlist = SpotifyPlus.Playlists.create('Awesome Songs');
+
+// Add the current song to this newly created playlist
+SpotifyPlus.Playlists.addTracks(playlist, [track]);
+```
+
+## Returns
+
+`SpotifyTrack`
+
+The current track snapshot. 
+
+## Remarks
+
+When getting the current track, some fields are not going to be complete. `artists` is an array that will only contain the main artist. It will only ever have one artist in this array. And `explicit` will always return `false` for this method. If you need either of those fields, please use `SpotifyPlus.Internal.getTrack(track.uri)` to get every field. 
+
+Reads local extension storage synchronously. Returns the decoded value directly, or `null` when no value is available.

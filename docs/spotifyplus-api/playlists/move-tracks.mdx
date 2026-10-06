@@ -1,0 +1,67 @@
+---
+sidebar_label: 'moveTracks()'
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@site/src/components/Badge';
+
+# Playlists.moveTracks()
+
+Reorders songs in a playlist.
+
+## Syntax
+
+<CodeBlock language="ts">
+  <span style={{ display: 'inline' }}>SpotifyPlus.Playlists.moveTracks(playlist: <a href="/docs/types/spotify-uri-input">SpotifyUriInput</a>, rowIds: string[], beforeRowId?: string): void</span>
+</CodeBlock>
+
+## Examples
+
+The following example shows how an extension can put the second track before the first track in a playlist.
+
+```ts
+// Put the second track before the first track in a playlist.
+const saved = await SpotifyPlus.Library.list({ type: 'playlist', limit: 1 });
+const playlistUri = saved.items[0]?.uri;
+if (!playlistUri) return;
+
+const page = await SpotifyPlus.Playlists.get(playlistUri, { limit: 2 });
+if (page.items.length < 2) return;
+
+SpotifyPlus.Playlists.moveTracks(
+  playlistUri, [page.items[1].rowId], page.items[0].rowId
+);
+```
+
+## Parameters
+
+`playlist`
+
+<Badge href="/docs/types/spotify-uri-input">SpotifyUriInput</Badge> <Badge variant="danger">Required</Badge>
+
+The playlist to read or change.
+
+`rowIds`
+
+<Badge>string[]</Badge> <Badge variant="danger">Required</Badge>
+
+The IDs of individual playlist rows returned by `Playlists.get()`.
+
+`beforeRowId`
+
+<Badge>string</Badge> <Badge variant="neutral">Optional</Badge>
+
+The row to place the selected rows before. Omit it to move them to the end.
+
+## Returns
+
+`void`
+
+Returns after the rows are moved.
+
+## Remarks
+
+Do not include `beforeRowId` to move the selected rows to the end.
+
+
+This is a synchronous local modification. It throws if Spotify rejects the operation. The result acknowledges the local playlist change; Spotify synchronizes the account separately. Playlist loading with `Playlists.get()` remains asynchronous.
