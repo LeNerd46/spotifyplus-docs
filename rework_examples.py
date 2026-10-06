@@ -806,7 +806,7 @@ def rewrite(path):
     code = EXAMPLES[relative]
     language = 'tsx' if '<' in code and '/>' in code else 'ts'
     description = 'The following example shows a typical use of this method in an extension.'
-    page = f"---\nsidebar_label: '{heading.split('.')[-1]}'\n---\n\nimport CodeBlock from '@theme/CodeBlock';\nimport Badge from '@site/src/components/Badge';\n\n# {heading}\n\n{summary}\n\n## Syntax\n\n{linked_syntax(signature)}\n\n## Examples\n\n{description}\n\n```{language}\n{code}\n```\n\n## Parameters\n\n{param_content}## Returns\n\n`{return_type}`\n\n{returns}\n"
+    page = f"---\nsidebar_label: '{heading.split('.')[-1]}'\n---\n\nimport CodeBlock from '@theme/CodeBlock';\nimport Badge from '@site/src/components/badge';\n\n# {heading}\n\n{summary}\n\n## Syntax\n\n{linked_syntax(signature)}\n\n## Examples\n\n{description}\n\n```{language}\n{code}\n```\n\n## Parameters\n\n{param_content}## Returns\n\n`{return_type}`\n\n{returns}\n"
     if remarks:
         page += f'\n## Remarks\n\n{remarks}\n'
     destination = path.with_suffix('.mdx')

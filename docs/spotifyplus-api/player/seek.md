@@ -2,7 +2,7 @@
 sidebar_label: 'seek()'
 ---
 
-import Badge from '@site/src/components/Badge';
+import Badge from '@site/src/components/badge';
 
 # Player.seek()
 
