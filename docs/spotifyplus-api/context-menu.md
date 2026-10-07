@@ -90,6 +90,4 @@ function NowPlayingOptions() {
 }
 ```
 
-This invokes the current Now Playing view's native menu-button listener, preserving playback-specific behavior. Call it from a ready full Now Playing screen, including a supported replacement. It rejects when the activity/button is missing or disabled. Elsewhere, use `open(track)` for a known track.
-
-All opening helpers require a foreground Spotify activity and ready native launchers. Current bindings target Spotify **9.1.82.2160**; unsupported layouts or early startup can reject. See [the custom UI tutorial](../guides/custom-ui-page.md) for long-press rows and custom native-action buttons.
+This opens the context menu that you would get from the now playing screen. This has some additional options such as toggling the in line lyrics. And maybe other stuff, idk

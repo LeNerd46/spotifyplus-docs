@@ -29,7 +29,6 @@ Below is an example of a full `manifest.json`.
   ],
   "tags": ["bookmarks", "library"],
   "preview": "screenshot.png",
-  "changelog": "changelog.json",
   "banner": "banner.png",
   "api": 2,
   "assets": ["assets/**/*"],
@@ -59,7 +58,6 @@ This is a list of all properties available in `manifest.json`
 | `banner`      | `string`         | Path to image used for a banner image in the marketplace  |          |
 | `assets`      | `string[]`       | An array of assets used by your extension                 |          |
 | `native`      | `NativeMetadata` | Information about the native code your extension uses     |          |
-| `changelog`   | `Changelog`      | Your extension's changelog                                |          |
 
 ### Author
 
@@ -75,62 +73,4 @@ This is a list of all properties available in `manifest.json`
 | `apk`         | `string` | Path to the APK file               | ✓        |
 | `pluginClass` | `string` | Full name of the entry point class | ✓        |
 
-## Changelog
-
-This is where you can define a changelog for your extension. This will appear in the marketplace. It is an array of changelog entries. Below is an example of a changelog
-
-```json
-[
-  {
-    "version": "1.1",
-    "release": "2026-21-09",
-    "sections": [
-      {
-        "heading": "Changes",
-        "changes": [
-          "Changed something",
-          {
-            "text": "There are also some related things that changed",
-            "subLines": ["Here is one", "This is another!", "Oh boy, one more"]
-          }
-        ]
-      },
-      {
-        "heading": "Fixed",
-        "changes": [
-          "Something was fixed",
-          "Wait, there was another thing that got fixed"
-        ]
-      }
-    ]
-  },
-  {
-    "version": "1.0",
-    "release": "2026-8-26",
-    "sections": [
-      {
-        "heading": "New",
-        "changes": ["Initial release"]
-      }
-    ]
-  }
-]
-```
-
-| Property   | Type                 | Description                                    | Required |
-| :--------- | :------------------- | :--------------------------------------------- | :------- |
-| `version`  | `string`             | What version this entry is                     | ✓        |
-| `release`  | `string`             | The day this version was released (YYYY-MM-DD) | ✓        |
-| `sections` | `ChangelogSection[]` | A list of sections                             | ✓        |
-
-<br/>
-| Property  | Type                                    | Description                  | Required |
-| :-------- | :-------------------------------------- | :--------------------------- | :------- |
-| `heading` | `string`                                | The heading for this section | ✓        |
-| `changes` | `string[] \| ChangelogSectionChanges[]` | A list of changes            | ✓        |
-
-<br/>
-| Property   | Type       | Description        | Required |
-| :--------- | :--------- | :----------------- | :------- |
-| `text`     | `string`   | The top line       | ✓        |
-| `subLines` | `string[]` | A list of sublines | ✓        |
+If you publish a new GitHub release, the markdown contents of that release will appear in the marketplace as a change log. This is optional, but it can give extra information about your extension and what has changed.

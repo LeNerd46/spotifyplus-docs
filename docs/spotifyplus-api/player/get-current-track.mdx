@@ -41,14 +41,6 @@ const playlist = SpotifyPlus.Playlists.create('Awesome Songs');
 SpotifyPlus.Playlists.addTracks(playlist, [track]);
 ```
 
-## Returns
-
-`SpotifyTrack`
-
-The current track snapshot. 
-
 ## Remarks
 
 When getting the current track, some fields are not going to be complete. `artists` is an array that will only contain the main artist. It will only ever have one artist in this array. And `explicit` will always return `false` for this method. If you need either of those fields, please use `SpotifyPlus.Internal.getTrack(track.uri)` to get every field. 
-
-Reads local extension storage synchronously. Returns the decoded value directly, or `null` when no value is available.
