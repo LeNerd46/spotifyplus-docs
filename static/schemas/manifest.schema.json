@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lenerd46.github.io/spotifyplus-docs/schemas/manifest.schema.json",
+  "title": "Spotify Plus Extension Manifest",
+  "description": "Configuration file for submitting an extension to the Spotify Plus marketplace",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A unique identifier for your extension",
+      "examples": [
+        "com.lenerd.example"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The name of your extension"
+    },
+    "description": {
+      "type": "string",
+      "description": "A description of your extension"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The current version of your extension",
+      "examples": [
+        "1.0",
+        "1.0.0"
+      ]
+    },
+    "authors": {
+      "type": "array",
+      "description": "A list of authors who worked on this extension.",
+      "items": {
+        "$ref": "#/$defs/Author"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags used to categorize your extension",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        [
+          "bookmarks",
+          "library",
+          "lyrics"
+        ]
+      ]
+    },
+    "api": {
+      "type": "integer",
+      "minimum": 2,
+      "description": "The Spotify Plus API version this extension uses. The current latest is 2"
+    },
+    "main": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Path to the main JavaScript file",
+      "examples": [
+        "dist/index.js"
+      ]
+    },
+    "preview": {
+      "type": "string",
+      "description": "Path to the image used as a preview in the marketplace"
+    },
+    "banner": {
+      "type": "string",
+      "description": "Path to the image used as a banner in the marketplace"
+    },
+    "assets": {
+      "type": "array",
+      "description": "An array of asset paths or glob patterns used by your extension",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        [
+          "assets/**/*"
+        ]
+      ]
+    },
+    "native": {
+      "$ref": "#/$defs/NativeMetadata",
+      "description": "Information about the native code your extension uses"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "description",
+    "version",
+    "authors",
+    "tags",
+    "api",
+    "main"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "Author": {
+      "type": "object",
+      "description": "An author who worked on the extension",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The name of the author"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "A URL to the author's GitHub or other profile"
+        }
+      },
+      "required": [
+        "name",
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "NativeMetadata": {
+      "type": "object",
+      "description": "Metadata for an extension's native Android plugin",
+      "properties": {
+        "apk": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Path to the APK file, starting from the directory of your main JavaScript file",
+          "examples": [
+            "native.apk"
+          ]
+        },
+        "pluginClass": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Full name of the native plugin entry point class",
+          "examples": [
+            "com.lenerd.example.NativePlugin"
+          ]
+        }
+      },
+      "required": [
+        "apk",
+        "pluginClass"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
